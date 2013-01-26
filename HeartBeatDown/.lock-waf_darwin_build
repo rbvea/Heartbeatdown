@@ -1,8 +1,0 @@
-argv = [u'/usr/lib/haxe/lib/flambe/2,1/bin/waf', 'configure', '--debug']
-environ = {'TERM_SESSION_ID': 'E8B0205D-3E0F-4D84-B89B-8E4F33DC2674', 'SSH_AUTH_SOCK': '/tmp/launch-KexhIa/Listeners', 'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'TERM_PROGRAM_VERSION': '309', 'SHELL': '/bin/bash', 'LOGNAME': 'remix', 'USER': 'remix', 'HOME': '/Users/remix', 'PATH': '/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin', 'TMPDIR': '/var/folders/wk/657nsj091b76ty7r1rsg478h0000gn/T/', 'TERM_PROGRAM': 'Apple_Terminal', 'LANG': 'en_US.UTF-8', 'TERM': 'xterm-256color', 'Apple_PubSub_Socket_Render': '/tmp/launch-ids6Lh/Render', 'VERSIONER_PYTHON_VERSION': '2.7', 'SHLVL': '1', 'OLDPWD': '/Users/remix/GG/Heatbeatdown', 'SECURITYSESSIONID': '186a3', '__CF_USER_TEXT_ENCODING': '0x1F5:0:0', 'Apple_Ubiquity_Message': '/tmp/launch-fm7IMy/Apple_Ubiquity_Message', 'PWD': '/Users/remix/GG/Heatbeatdown/HeartBeatDown', '_': '/usr/bin/wafl', 'COMMAND_MODE': 'unix2003'}
-files = ['/Users/remix/GG/Heatbeatdown/HeartBeatDown/wscript']
-hash = 1780464986129348425
-options = {'files': '', 'no_html': None, 'jobs': 4, 'verbose': 0, 'nocache': False, 'flashdevelop': None, 'top': '', 'progress_bar': 0, 'no_android': None, 'destdir': '', 'keep': 0, 'zones': '', 'debug': True, 'prefix': '/usr/local/', 'no_flash': None, 'no_ios': None, 'download': False, 'force': False, 'targets': '', 'out': ''}
-out_dir = '/Users/remix/GG/Heatbeatdown/HeartBeatDown/build'
-run_dir = '/Users/remix/GG/Heatbeatdown/HeartBeatDown'
-top_dir = '/Users/remix/GG/Heatbeatdown/HeartBeatDown'

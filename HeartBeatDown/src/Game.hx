@@ -14,6 +14,10 @@ class Game extends Component
   public var layer_player:Entity;
   public var layer_ui:Entity;
 
+  public var artery:Entity;
+
+  public var player:Player;
+
   public function new()
   {
     layer_bg = new Entity();
@@ -35,8 +39,11 @@ class Game extends Component
     System.root.addChild(layer_ui);
 
     var artery = new Entity()
-      .add(new ImageSprite(HeartBeatDownMain.pack.getTexture("Artery")));
+      .add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery")));
     layer_walls.addChild(artery);
+
+    player = new Player(this);
+    layer_player.addChild(player.entity);
   }
   override public function onAdded ()
   {
