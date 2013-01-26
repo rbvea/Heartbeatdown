@@ -1,25 +1,14 @@
 import flambe.Component;
+import flambe.display.Sprite;
+import flambe.asset.AssetPack;
 
-class Baddie extends Component
+class Baddie extends RandomSprite
 {
-	public function new()
+
+	public function new(arteryRadius :Float)
 	{
-		
+		super(arteryRadius);
 	}
 }
 
-class Virus extends Baddie
-{
-		public function new()
-	{
-		
-	}
-}
 
-class Bacteria extends Baddie
-{
-		public function new()
-	{
-		
-	}
-}

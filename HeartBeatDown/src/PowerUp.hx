@@ -1,25 +1,12 @@
 import flambe.Component;
 
-class PowerUp extends Component
+class PowerUp extends RandomSprite
 {
-	public function new()
+	public function new(arteryRadius :Float)
 	{
+		super(arteryRadius);
 		
 	}
 }
 
-class Adrenaline extends PowerUp
-{
-		public function new()
-	{
-		
-	}
-}
 
-class Vagusstoff extends PowerUp
-{
-		public function new()
-	{
-		
-	}
-}

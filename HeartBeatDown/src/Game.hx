@@ -37,6 +37,9 @@ class Game extends Component
     var artery = new Entity()
       .add(new ImageSprite(HeartBeatDownMain.pack.getTexture("Artery")));
     layer_walls.addChild(artery);
+
+    // temporary code to test Baddie
+    var virus = new Virus(1000);
   }
   override public function onAdded ()
   {
