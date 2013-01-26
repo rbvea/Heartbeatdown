@@ -18,6 +18,8 @@ class Game extends Component
 
   public var player:Player;
 
+  private var controller:AbstractController;
+
   public function new()
   {
     layer_bg = new Entity();
@@ -44,9 +46,21 @@ class Game extends Component
 
     player = new Player(this);
     layer_player.addChild(player.entity);
+
+    controller = new KeyboardController(this);
   }
   override public function onAdded ()
   {
     
   }
+
+  public function doMoveLeft():Void
+  {
+    player.moveLeft();
+  }
+  public function doMoveRight():Void
+  {
+    player.moveRight();
+  }
+
 }

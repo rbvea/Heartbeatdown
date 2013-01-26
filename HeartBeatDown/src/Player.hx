@@ -4,9 +4,9 @@ import flambe.display.ImageSprite;
 
 class Player
 {
-  private static inline var RAIL_POSITIONS = [100,200,300,400,500];
+  private static inline var RAIL_POSITIONS = [200,350,500,650,800];
   private static inline var PLAYER_Y_POSITION = 600;
-
+  private static inline var RAIL_SWITCH_SPEED = .25; // seconds
 
   public var entity:Entity;
   public var pos:Int; // rail id, 1,2,3,4,5
@@ -29,16 +29,16 @@ class Player
   }
   public function moveLeft():Void
   {
-    if(pos>0){
+    if(pos>1){
       pos--;
-      body.x.animateTo(RAIL_POSITIONS[pos-1],PLAYER_Y_POSITION);
+      body.x.animateTo(RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
     }
   }
   public function moveRight():Void
   {
-    if(pos<4){
+    if(pos<5){
       pos++;
-      body.x.animateTo(RAIL_POSITIONS[pos-1],PLAYER_Y_POSITION);
+      body.x.animateTo(RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
     }
   }
 }
