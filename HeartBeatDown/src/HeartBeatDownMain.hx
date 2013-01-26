@@ -4,8 +4,12 @@ import flambe.System;
 
 class HeartBeatDownMain
 {
+  public static var pack :AssetPack;
+
     private static function onSuccess (pack :AssetPack)
     {
+        HeartBeatDownMain.pack = pack;
+        System.root.add(new Game());
     }
 
     private static function main ()
