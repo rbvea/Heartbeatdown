@@ -1,0 +1,3 @@
+#!/bin/bash
+wafl install
+./bin/test_flash
