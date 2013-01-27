@@ -6,8 +6,6 @@ import flambe.input.Key;
 
 class TouchController extends AbstractController
 {
-  private var tempTrace:flambe.display.TextSprite;
-
   private var touching:Bool;
   private var downX: Float;
   inline private static var swipeMinDistance = 200;
@@ -20,40 +18,27 @@ class TouchController extends AbstractController
 
     System.pointer.down.connect(touchDown);
     System.pointer.up.connect(touchUp);
-    System.pointer.move.connect(touchMove);
+    // System.pointer.move.connect(touchMove);
     
-    tempTrace = new flambe.display.TextSprite(new flambe.display.Font(HeartBeatDownMain.pack, "redrum72"), "DEBUG");
-    game.layer_ui.add(tempTrace);
   }
-
-  // on swipe left, do  goLeft()
-  
 
   private inline function touchDown(point:PointerEvent):Void
   {
-    tempTrace.text = Std.string(point.viewX) + " " + Std.string(point.viewY);
     downX = point.viewX;
     touching = true;
   }
   private inline function touchUp(point:PointerEvent):Void
   {
-    tempTrace.text = Std.string(point.viewX) + " " + Std.string(point.viewY);
     if(point.viewX > downX + swipeMinDistance) {
-      tempTrace.text = "SWIPED LEFT";
-      game.doMoveLeft();
+      goLeft();
     } else if (point.viewX < downX - swipeMinDistance) {
-      tempTrace.text = "SWIPED RIGHT";
-      game.doMoveRight();
-    } else {
-      tempTrace.text = "NO SWIPE";
+      goRight();
     }
     touching = false;
   }
-  private inline function touchMove(point:PointerEvent):Void
-  {
-    if(touching){
-      tempTrace.text = Std.string(point.viewX) + " " + Std.string(point.viewY);
-    } 
-  }
+  // private inline function touchMove(point:PointerEvent):Void
+  // {
+    
+  // }
 
 }
