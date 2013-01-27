@@ -37,8 +37,6 @@ class Game extends Component
     System.root.addChild(layer_player);
     System.root.addChild(layer_ui);
 
-
-
 	layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
 	layer_walls.add(new Script());
@@ -56,6 +54,8 @@ class Game extends Component
 
 	layer_bg.addChild(new BgLayer().entity);
 
+    // temporary code to test Baddie
+    //var virus = new Virus(1000);
   }
 
 
