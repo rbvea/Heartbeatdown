@@ -21,13 +21,11 @@ class PointerController extends AbstractController
   private inline function touchDown(point:PointerEvent):Void
   {
     if(!touching){
-      var touched = this.hit;
-      trace(touched);
-      if(touched != null){
-        if(Std.is(touched,IHittable)){
-          touched.hit();
-        }
-      }
+      var touched = point.hit;
+      // trace(touched);
+      // if(touched != null){
+      //   touched.hit();
+      // }
       touching = true;
     }
   }
