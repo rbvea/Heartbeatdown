@@ -23,15 +23,14 @@ class LayerFork extends Component{
 	private var fork1:Entity;
 	private var fork2:Entity;
 	private var game:Game;
-	private var acceleration:Float;
-	private var map:Map;
+	private var acceleration:Float; 
+	private var activeFork:Bool;
 	
 	public function new (game:Game)
 	{
 		this.game = game;
 		this.acceleration = 0;
-		this.map = new Map();
-
+		
 		entity = new Entity().add(new Script());
 		fork1 = new Entity();
 		fork2 = new Entity();
@@ -54,36 +53,7 @@ class LayerFork extends Component{
 		image1 = fork1.get(ImageSprite);
 		image2 = fork2.get(ImageSprite);
 		
-		var currentNode = map.startNode;
-
-		while(true) {
-			trace("in while loop");
-			switch(currentNode) {
-				case Branch(difficulty, right, left, pointArray) : {
-					entity.get(Script).run(new Sequence([
-						new CallFunction(zoomIn),
-						new Delay(SPEED*pointArray.length),
-						//switch animations based on user input
-						new CallFunction(function() {
-							if(game.player.pos > 3) {
-								currentNode = right;
-								trace("going right");
-								zoomRight();
-							} else {
-								currentNode = left;
-								trace("going left");
-								zoomLeft();
-							}
-						}),
-					]));
-				}
-				case Leaf: {
-					break;
-					// end of game!
-				}
-			}
-		}
-
+		activeFork = true;
 	}
 
 	override function onUpdate(dt:Float):Void
@@ -98,8 +68,11 @@ class LayerFork extends Component{
 				zoomLeft();
 			}
       //image.dispose();
-    }else{
+    }else if(activeFork){
+    	game.chooseNode( (game.player.pos > 3)? Direction.RIGHT:Direction.LEFT );
+    	// finished animation.
     	entity.dispose();
+    	activeFork = false;
     }
     image1.setScale(image1.scaleX._+acceleration);
     image2.setScale(image2.scaleX._+acceleration);
