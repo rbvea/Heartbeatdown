@@ -47,7 +47,12 @@ class Game extends Component
     player = new Player(this);
     layer_player.addChild(player.entity);
 
+#if flash
     controller = new KeyboardController(this);
+#elseif html
+    controller = new TouchController(this);
+#end
+
   }
   override public function onAdded ()
   {
