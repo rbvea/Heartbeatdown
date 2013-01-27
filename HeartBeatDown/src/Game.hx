@@ -11,11 +11,10 @@ import flambe.script.Script;
 
 class Game extends Component 
 {
-  private static inline var INIT_MOVESPEED = .02; // .05 is pretty fast
+  private static inline var INIT_MOVESPEED = .03; // .05 is pretty fast
 
 	public var layer_bg:Entity;
 	public var layer_walls:Entity;
-	public var layer_wall:LayerWall;
 	public var layer_game:Entity;
 	public var layer_player:Entity;
 	public var layer_ui:Entity;
@@ -29,7 +28,7 @@ class Game extends Component
   private var controller:AbstractController; // for moving left/right
   private var pointer:PointerController;     // for blasting baddies
 
-
+  // public var layer_wall:LayerWall;
   private var tick:Int;
   private var forking_action:Bool;
   private var layer_walls_list:List<LayerWall>;
@@ -93,6 +92,7 @@ class Game extends Component
 
     if(tick == 440){
       var layer_fork = new LayerFork(this);
+      layer_walls.add(layer_fork);
       layer_walls.addChild(layer_fork.entity);
       forking_action = true;
     }
