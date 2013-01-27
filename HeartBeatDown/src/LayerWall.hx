@@ -31,7 +31,7 @@ class LayerWall extends Component {
 
 		image = entity.get(ImageSprite);
 		image.setScale(0);
-		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.25).centerAnchor();
+		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.28).centerAnchor();
 		
 	}
 }

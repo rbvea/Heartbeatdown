@@ -126,7 +126,7 @@ class Game extends Component
 			layer_walls.addChild(lwall.entity, false);
 		}
 		
-		if(tick == forkTicks-60){
+		if(tick == forkTicks-180){
 			var layer_fork = new LayerFork(this);
 			layer_walls.add(layer_fork);
 			layer_walls.addChild(layer_fork.entity, false);
@@ -198,11 +198,16 @@ class Game extends Component
 
   private function updateMiniMap(): Void
   {
+    trace("tick = " + tick);
     var segment = Std.int(tick / TICKS_PER_MAP_SEGMENT);
+    trace("Node = " + currentNode.id);
+    trace("segment = " + segment);
     var startPoint = currentNode.pointArray[segment];
     var endPoint = currentNode.pointArray[segment + 1];
-    var curX = startPoint.x + (endPoint.x - startPoint.x) * tick / TICKS_PER_MAP_SEGMENT;
-    var curY = startPoint.y + (endPoint.y - startPoint.y) * tick / TICKS_PER_MAP_SEGMENT;
+    var curX = startPoint.x + (endPoint.x - startPoint.x) * (tick % TICKS_PER_MAP_SEGMENT) / TICKS_PER_MAP_SEGMENT;
+    var curY = startPoint.y + (endPoint.y - startPoint.y) * (tick % TICKS_PER_MAP_SEGMENT) / TICKS_PER_MAP_SEGMENT;
+    miniMapUser.x._ = curX + miniMapLocation.x;
+    miniMapUser.y._ = curY + miniMapLocation.y;
   }
 
 }
