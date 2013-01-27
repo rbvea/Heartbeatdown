@@ -2,17 +2,22 @@ import flambe.Entity;
 import flambe.Component;
 import flambe.display.ImageSprite;
 import flambe.display.Sprite;
+import flambe.display.FillSprite;
 import flambe.System;
 import flambe.script.Sequence;
 import flambe.script.CallFunction;
 import flambe.script.Delay;
 import flambe.script.Repeat;
 import flambe.script.Script;
+import haxe.FastList;
 
 class Game extends Component 
 {
+
+  private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [80,55,25]; // 0 = EASY
   private static inline var INIT_MOVESPEED = 3.0; // 5.0 is pretty fast
   private static inline var TICKS_PER_MAP_SEGMENT = 480;
+
 
 	public var layer_bg:Entity;
 	public var layer_walls:Entity;
@@ -35,7 +40,11 @@ class Game extends Component
   // public var layer_wall:LayerWall;
   private var tick:Int;
   private var forking_action:Bool;
-  private var layer_walls_list:List<LayerWall>;
+  private var baddies:FastList<Baddy>;
+  private var layer_walls_list:FastList<LayerWall>;
+  private var baddy_spawn_rate:Int;
+	private var reachedEnd:Bool;
+	private var baddy_random:Int; 
 
   public function new()
   {
@@ -59,18 +68,19 @@ class Game extends Component
     System.root.addChild(layer_player, true);
     System.root.addChild(layer_ui, true);
 
+	baddy_random = Std.random(480);
+    forking_action = false;
+    layer_walls_list = new haxe.FastList<LayerWall>();
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
     var layer_i = 0;
     var baddy_random = Std.random(TICKS_PER_MAP_SEGMENT);
-    layer_walls_list = new List<LayerWall>();
-
 
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
     forking_action = false;
-    layer_walls_list = new List<LayerWall>();
+    baddies = new haxe.FastList<Baddy>();
 	
     moveSpeed = INIT_MOVESPEED;
   	player = new Player(this);
@@ -83,27 +93,37 @@ class Game extends Component
 #end
     pointer = new PointerController(this);
 
+    baddy_spawn_rate = BADDY_SPAWN_RATE_DIFFICULTY[currentNode.difficulty-1]; // * difficulty
 
     currentNode = map.startNode;
     makeMiniMap();
-
   }
 
   public function chooseNode(direction:Direction):Void{
     switch (direction) {
       case Direction.LEFT:
-        currentNode = currentNode.left;
+		  if(currentNode.left != null) {
+			  currentNode = currentNode.left;
+		  } else {
+			  reachedEnd = true;
+			  tick = 0;
+		  }
       case Direction.RIGHT: 
-        currentNode = currentNode.right;
+		  if(currentNode.right != null) {
+			  currentNode = currentNode.right;
+		  } else {
+			  reachedEnd = true;
+			  tick = 0;
+		  }
     }
-    trace(currentNode);
-    trace(currentNode.difficulty);
   }
 
   override public function onUpdate (dt:Float):Void
   {
     var forkTicks = TICKS_PER_MAP_SEGMENT * (currentNode.pointArray.length - 1);
     tick++;
+
+	if(!reachedEnd) {
     if(!forking_action && (tick * moveSpeed) % 90 == 0){
       var lwall = new LayerWall(this);
       layer_walls_list.add(lwall);
@@ -119,9 +139,12 @@ class Game extends Component
     if(forking_action && tick==forkTicks){
       forking_action = false;
       tick = 0;
-      trace(Std.string(layer_walls_list.length));
     }
-  
+
+		if(tick == baddy_random && !forking_action) {
+			layer_game.addChild(new Baddy1(this).entity);
+			baddy_random = Std.random(480);
+		}
 
     // increase all layer wall scales
     for(lw in layer_walls_list){
@@ -133,11 +156,23 @@ class Game extends Component
         //image.dispose();
         layer_walls_list.remove(lw);
       }
-    }
-    
-    updateMiniMap();
+    }		
 
-
+	} else if(tick < 500) { //rapid spawning baddies
+		if(Std.random(5) == 0) {
+			layer_game.addChild(new FinalBaddy(this).entity);
+		}
+	} else { //fadeOut
+			var final = new Entity().add(
+				new FillSprite(0xFFFFFF, System.stage.width, System.stage.height)
+			);
+			var whiteout = final.get(FillSprite);
+			whiteout.alpha._ = 0;
+			System.root.addChild(final);
+			whiteout.alpha.animateTo(1, 7);
+			haxe.Timer.delay(HeartBeatDownMain.cleanup, 7000);
+	}
+  updateMiniMap();
   }
 
   private function makeMiniMap(): Void
