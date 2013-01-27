@@ -31,15 +31,16 @@ class Game extends Component
     layer_player.add(new Sprite());
     layer_ui.add(new Sprite());
 
-    System.root.addChild(layer_bg);
-    System.root.addChild(layer_walls);
-    System.root.addChild(layer_game);
-    System.root.addChild(layer_player);
-    System.root.addChild(layer_ui);
+    System.root.addChild(layer_bg, true);
+    System.root.addChild(layer_walls, true);
+    System.root.addChild(layer_game, true);
+    System.root.addChild(layer_player, true);
+    System.root.addChild(layer_ui, true);
 
-	layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
+	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
 	layer_walls.add(new Script());
+	/*
 	layer_walls.get(Script).run(new Sequence([
 		new CallFunction(function() {
 			layer_wall = new LayerWall();
@@ -50,9 +51,10 @@ class Game extends Component
 			layer_wall = new LayerWall();
 			layer_walls.addChild(layer_wall.entity);
 		}),
-	]));
+		]));*/
 
 	layer_bg.addChild(new BgLayer().entity);
+	layer_walls.addChild(new LayerFork().entity);
 
     // temporary code to test Baddie
     //var virus = new Virus(1000);
