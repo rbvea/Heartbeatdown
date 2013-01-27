@@ -22,7 +22,8 @@ class Game extends Component
 
   public var player:Player;
 
-  private var controller:AbstractController;
+  private var controller:AbstractController; // for moving left/right
+  private var pointer:PointerController;     // for blasting baddies
 
   public function new()
   {
@@ -71,13 +72,6 @@ class Game extends Component
   	player = new Player(this);
   	layer_player.addChild(player.entity);
 
-  	#if flash
-  	    controller = new KeyboardController(this);
-  	#elseif html
-  	    controller = new TouchController(this);
-  	#end
-	
-
     var b1 = new Baddy1(this);
     var b2 = new Baddy1(this);
     var b3 = new Baddy1(this);
@@ -86,6 +80,14 @@ class Game extends Component
     layer_game.addChild(b2.entity);
     layer_game.addChild(b3.entity);
     layer_game.addChild(b4.entity);
+
+#if flash
+    controller = new KeyboardController(this);
+#elseif html
+    controller = new TouchController(this);
+#end
+    pointer = new PointerController(this);
+
   }
 
 
