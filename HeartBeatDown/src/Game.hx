@@ -8,10 +8,12 @@ import flambe.script.CallFunction;
 import flambe.script.Delay;
 import flambe.script.Repeat;
 import flambe.script.Script;
+import haxe.FastList;
 
 class Game extends Component 
 {
   private static inline var INIT_MOVESPEED = .03; // .05 is pretty fast
+  private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [100,75,50]; // 0 = EASY
 
 	public var layer_bg:Entity;
 	public var layer_walls:Entity;
@@ -32,6 +34,9 @@ class Game extends Component
   private var tick:Int;
   private var forking_action:Bool;
   private var layer_walls_list:List<LayerWall>;
+  private var baddies:FastList<Baddy>;
+  private var baddy_spawn_rate:Int;
+
 
   public function new()
   {
@@ -57,45 +62,12 @@ class Game extends Component
 
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
-    var layer_i = 0;
-	 var baddy_random = Std.random(480);
-    var forking_action = false;
-    layer_walls_list = new List<LayerWall>();
-  	layer_walls.add(new Script());
-  	layer_walls.get(Script).run(
-      new Repeat(
-        new CallFunction(function() {
-          layer_i++;
-		  
-          if(!forking_action && layer_i % 40 == 0){
-            var lwall = new LayerWall(this);
-            layer_walls_list.add(lwall);
-            layer_walls.addChild(lwall.entity);
-          }
-
-		  if(layer_i == baddy_random) {
-			  layer_game.addChild(new Baddy1(this).entity);
-			  baddy_random = Std.random(480);
-		  }
-
-          if(layer_i == 440){
-            var layer_fork = new LayerFork(this);
-            layer_walls.addChild(layer_fork.entity);
-            forking_action = true;
-          }
-          if(forking_action && layer_i==480){
-            forking_action = false;
-            layer_i = 0;
-          }
-        })
-      )
-    );
-
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
     forking_action = false;
     layer_walls_list = new List<LayerWall>();
+    baddies = new FastList<Baddy>();
 	
     moveSpeed = INIT_MOVESPEED;
   	player = new Player(this);
@@ -111,7 +83,7 @@ class Game extends Component
 
 
     currentNode = map.startNode;
-
+    baddy_spawn_rate = BADDY_SPAWN_RATE_DIFFICULTY[currentNode.difficulty-1]; // * difficulty
   }
 
   public function chooseNode(direction:Direction):Void{
@@ -134,16 +106,22 @@ class Game extends Component
       layer_walls.addChild(lwall.entity);
     }
 
-    if(tick == 440){
+    if(tick == 940){
       var layer_fork = new LayerFork(this);
       layer_walls.add(layer_fork);
       layer_walls.addChild(layer_fork.entity);
       forking_action = true;
     }
-    if(forking_action && tick==480){
+    if(forking_action && tick==980){
       forking_action = false;
       tick = 0;
       trace(Std.string(layer_walls_list.length));
+    }
+
+    if(Std.random(baddy_spawn_rate) == 0) {
+      var baddy = new Baddy1(this);
+      baddies.add(baddy);
+      layer_game.addChild(baddy.entity);
     }
   
 
