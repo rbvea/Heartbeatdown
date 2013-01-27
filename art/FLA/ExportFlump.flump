@@ -1,0 +1,16 @@
+{
+  "exportDir": "FLUMP",
+  "exports": [
+    {
+      "scale": 1,
+      "textureBorder": 1,
+      "format": "JSONZip",
+      "name": "default",
+      "maxAtlasSize": 2048,
+      "additionalScaleFactors": [],
+      "scaleFactorsString": "",
+      "description": "'default' (JSONZip, 100%)"
+    }
+  ],
+  "importDir": ""
+}
