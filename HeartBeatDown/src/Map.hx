@@ -17,7 +17,7 @@ class Map
 		var p6 = new Point(26,117);
 		var p7 = new Point(51,104);
 		var p8 = new Point(58,80);
-		var p9 = new Point(4,58);
+		var p9 = new Point(46,58);
 		var p10 = new Point(71,52);
 		var p11 = new Point(68,25);
 		var p12 = new Point(100,28);
