@@ -22,4 +22,8 @@ class HeartBeatDownMain
         var loader = System.loadAssetPack(manifest);
         loader.get(onSuccess);
     }
+	
+	public static function cleanup() {
+		System.root.disposeChildren();
+	}
 }
