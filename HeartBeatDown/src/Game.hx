@@ -30,14 +30,15 @@ class Game extends Component
 
   private var controller:AbstractController; // for moving left/right
   private var pointer:PointerController;     // for blasting baddies
-
+  private var audioManager:AudioManager;
+  
   // public var layer_wall:LayerWall;
   private var tick:Int;
   private var forking_action:Bool;
   private var layer_walls_list:List<LayerWall>;
   private var baddies:FastList<Baddy>;
   private var baddy_spawn_rate:Int;
-
+  private var heart_rate:Int; // 0-11
 
   public function new()
   {
@@ -68,6 +69,7 @@ class Game extends Component
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
+    heart_rate = 0;
     forking_action = false;
     layer_walls_list = new List<LayerWall>();
     baddies = new FastList<Baddy>();
@@ -82,7 +84,7 @@ class Game extends Component
     controller = new TouchController(this);
 #end
     pointer = new PointerController(this);
-
+    audioManager = new AudioManager(this);
 
 
     currentNode = map.startNode;
@@ -96,8 +98,14 @@ class Game extends Component
       case Direction.RIGHT: 
         currentNode = currentNode.right;
     }
-    trace(currentNode);
-    trace(currentNode.difficulty);
+    
+    // increase heart rate faster and faster as we get closer, and more if more difficult
+    // temporary math is here.
+    heart_rate += currentNode.difficulty;
+    if(heart_rate > 11) heart_rate = 11;
+    else if(heart_rate < 0) heart_rate = 0;
+    
+    audioManager.playHeartBeat(heart_rate);
   }
 
   override public function onUpdate (dt:Float):Void

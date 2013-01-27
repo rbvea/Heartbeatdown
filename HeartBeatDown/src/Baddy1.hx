@@ -24,10 +24,7 @@ class Baddy1 extends Baddy
 
     var randX = Std.random(Std.int(stage_width*.1))-(stage_width*.05);
     var randY = Std.random(Std.int(stage_height*.1))-(stage_height*.05);
-    trace(randX+" "+randY);
-    //entity.add(new Sprite().setXY(randX, randY).setScale(0.2));
-    //entity.add(new Sprite().setXY(randX+(stage_width/2),randY+(stage_height/2)).setScale(0.2));
-
+    
     body = moviePlayer.movie;
     body.setXY(randX+(stage_width/2),randY+(stage_height/2)).setScale(0.0);
 
