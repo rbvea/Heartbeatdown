@@ -18,15 +18,22 @@ class Game extends Component
 	public var layer_player:Entity;
 	public var layer_ui:Entity;
 
+  public var artery:Entity;
+
+  public var player:Player;
+
+  private var controller:AbstractController;
+
   public function new()
   {
-    layer_bg = new Entity();
-    layer_walls = new Entity(); 
-    layer_game = new Entity();
-    layer_player = new Entity();
-    layer_ui = new Entity();
+    layer_bg = new Entity();     // end of the tunnel
+    layer_walls = new Entity();  // tunnel animations
+    layer_game = new Entity();   // baddies and powerups
+    layer_player = new Entity(); // main character
+    layer_ui = new Entity();     // ui score
 
     layer_bg.add(new Sprite());
+    layer_walls.add(new Script());
     layer_game.add(new Sprite());
     layer_player.add(new Sprite());
     layer_ui.add(new Sprite());
@@ -70,6 +77,18 @@ class Game extends Component
 
     // temporary code to test Baddie
     //var virus = new Virus(1000);
+	
+	
+	
+	player = new Player(this);
+	layer_player.addChild(player.entity);
+
+	#if flash
+	    controller = new KeyboardController(this);
+	#elseif html
+	    controller = new TouchController(this);
+	#end
+	
   }
 
 
@@ -78,4 +97,16 @@ class Game extends Component
   {
     
   }
+
+
+  public function doMoveLeft():Void
+  {
+    player.moveLeft();
+  }
+  public function doMoveRight():Void
+  {
+    player.moveRight();
+  }
+
 }
+

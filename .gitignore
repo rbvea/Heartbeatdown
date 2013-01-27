@@ -2,3 +2,5 @@ HeartBeatDown/build
 HeartBeatDown/deploy
 .lock-waf_darwin_build
 .DS_Store
+
+HeartBeatDown/.lock-waf_darwin_build
