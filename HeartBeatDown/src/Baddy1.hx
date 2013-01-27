@@ -22,7 +22,6 @@ class Baddy1 extends Baddy
   }
   public override function hit():Void // called by pointerDown
   {
-    trace("dispose entity");
     this.entity.dispose();
   }
 }
