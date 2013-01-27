@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://texturepacker.com-->
+<!-- $TexturePacker:SmartUpdate:8409e980f4ead225c17682775d5251a5$ -->
+<TextureAtlas imagePath="ship.png">
+    <SubTexture name="Cell-Shield0001" x="2" y="1010" width="322" height="202" frameX="-12" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0002" x="326" y="810" width="322" height="202" frameX="-12" frameY="-2" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0003" x="1624" y="608" width="322" height="202" frameX="-12" frameY="-2" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0004" x="1298" y="1012" width="320" height="200" frameX="-14" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0005" x="1622" y="812" width="320" height="200" frameX="-13" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0006" x="2" y="1416" width="318" height="200" frameX="-15" frameY="-2" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0007" x="1616" y="1214" width="318" height="200" frameX="-15" frameY="-2" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0008" x="1296" y="1214" width="318" height="200" frameX="-15" frameY="-2" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0009" x="1602" y="1616" width="318" height="198" frameX="-15" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0010" x="1282" y="1816" width="318" height="198" frameX="-15" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0011" x="1282" y="1616" width="318" height="198" frameX="-15" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0012" x="1602" y="1416" width="318" height="198" frameX="-15" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0013" x="1282" y="1416" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0014" x="962" y="1810" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0015" x="962" y="1610" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0016" x="642" y="1810" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0017" x="642" y="1610" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0018" x="962" y="1410" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0019" x="642" y="1410" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0020" x="322" y="1816" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0021" x="322" y="1616" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0022" x="322" y="1416" width="318" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0023" x="2" y="1818" width="318" height="198" frameX="-17" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0024" x="2" y="1618" width="318" height="198" frameX="-17" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0025" x="1620" y="1014" width="320" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0026" x="974" y="1210" width="320" height="198" frameX="-16" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0027" x="648" y="1212" width="320" height="196" frameX="-17" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0028" x="2" y="1214" width="320" height="196" frameX="-17" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0029" x="326" y="1014" width="322" height="196" frameX="-16" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0030" x="326" y="1212" width="320" height="196" frameX="-18" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0031" x="650" y="1012" width="322" height="198" frameX="-17" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0032" x="974" y="1010" width="322" height="198" frameX="-17" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0033" x="1298" y="812" width="322" height="198" frameX="-18" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0034" x="974" y="810" width="322" height="198" frameX="-18" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0035" x="2" y="606" width="324" height="198" frameX="-17" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0036" x="654" y="406" width="324" height="198" frameX="-17" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0037" x="328" y="406" width="324" height="198" frameX="-18" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0038" x="2" y="406" width="324" height="198" frameX="-18" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0039" x="986" y="2" width="326" height="198" frameX="-17" frameY="-5" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0040" x="658" y="2" width="326" height="200" frameX="-17" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0041" x="330" y="2" width="326" height="200" frameX="-17" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0042" x="1632" y="406" width="324" height="200" frameX="-18" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0043" x="2" y="2" width="326" height="200" frameX="-16" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0044" x="1306" y="406" width="324" height="200" frameX="-17" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0045" x="980" y="404" width="324" height="200" frameX="-17" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0046" x="654" y="204" width="324" height="200" frameX="-16" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0047" x="328" y="204" width="324" height="200" frameX="-16" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0048" x="2" y="204" width="324" height="200" frameX="-16" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0049" x="1638" y="204" width="324" height="200" frameX="-15" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0050" x="1312" y="204" width="324" height="200" frameX="-15" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0051" x="1640" y="2" width="324" height="200" frameX="-14" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0052" x="986" y="202" width="324" height="200" frameX="-14" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0053" x="650" y="810" width="322" height="200" frameX="-15" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0054" x="1314" y="2" width="324" height="200" frameX="-13" frameY="-4" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0055" x="1300" y="608" width="322" height="202" frameX="-14" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0056" x="976" y="606" width="322" height="202" frameX="-14" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0057" x="652" y="606" width="322" height="202" frameX="-13" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0058" x="2" y="806" width="322" height="202" frameX="-13" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0059" x="328" y="606" width="322" height="202" frameX="-12" frameY="-3" frameWidth="350" frameHeight="210"/>
+    <SubTexture name="Cell-Shield0060" x="2" y="1010" width="322" height="202" frameX="-12" frameY="-3" frameWidth="350" frameHeight="210"/>
+</TextureAtlas>

@@ -9,8 +9,8 @@ class TouchController extends AbstractController
   private var tempTrace:flambe.display.TextSprite;
 
   private var touching:Bool;
-  private var downX: Float;
-  inline private static var swipeMinDistance = 200;
+ // private var downX: Float;
+ // inline private static var swipeMinDistance = 100;
 
   public function new(game)
   {
@@ -26,27 +26,25 @@ class TouchController extends AbstractController
     game.layer_ui.add(tempTrace);
   }
 
-  // on swipe left, do  goLeft()
+  // on swipe left, do  game.doMoveLeft()
   
 
   private inline function touchDown(point:PointerEvent):Void
   {
     tempTrace.text = Std.string(point.viewX) + " " + Std.string(point.viewY);
-    downX = point.viewX;
+   // downX = point.viewX;
     touching = true;
   }
   private inline function touchUp(point:PointerEvent):Void
   {
     tempTrace.text = Std.string(point.viewX) + " " + Std.string(point.viewY);
-    if(point.viewX > downX + swipeMinDistance) {
-      tempTrace.text = "SWIPED LEFT";
+   /* if(point.viewX > downX + swipeMinDistance) {
+      tempTrace.text = "swipe left";
       game.doMoveLeft();
     } else if (point.viewX < downX - swipeMinDistance) {
-      tempTrace.text = "SWIPED RIGHT";
+      tempTrace.text = "swipe right";
       game.doMoveRight();
-    } else {
-      tempTrace.text = "NO SWIPE";
-    }
+    }*/
     touching = false;
   }
   private inline function touchMove(point:PointerEvent):Void
