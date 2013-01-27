@@ -7,7 +7,6 @@ import flambe.swf.Library;
 
 class Player
 {
-	private static inline var RAIL_POSITIONS = [150,300,450,600,750,900,1050];
 	private static inline var PLAYER_Y_POSITION = 650; 
 	private static inline var RAIL_SWITCH_SPEED = .25; // seconds
 
@@ -24,21 +23,21 @@ class Player
     this.pos = 3;
     entity = new Entity()
       .add( new MoviePlayer(new Library(HeartBeatDownMain.pack, "ship")).loop("Parent"))
-      .add( new Sprite().setXY(RAIL_POSITIONS[pos-1],PLAYER_Y_POSITION));
+      .add( new Sprite().setXY(Game.RAIL_POSITIONS[pos-1],PLAYER_Y_POSITION));
             
   }
   public function moveLeft():Void
   {
     if(pos>1){
       pos--;
-      entity.get(Sprite).x.animateTo(RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
+      entity.get(Sprite).x.animateTo(Game.RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
     }
   }
   public function moveRight():Void
   {
     if(pos<6){
       pos++;
-      entity.get(Sprite).x.animateTo(RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
+      entity.get(Sprite).x.animateTo(Game.RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
 	}
   }
 }
