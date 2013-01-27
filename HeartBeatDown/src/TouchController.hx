@@ -24,6 +24,9 @@ class TouchController extends AbstractController
     game.layer_ui.add(tempTrace);
   }
 
+  // on swipe left, do  game.doMoveLeft()
+  
+
   private inline function touchDown(point:PointerEvent):Void
   {
     tempTrace.text = Std.string(point.viewX) + " " + Std.string(point.viewY);
