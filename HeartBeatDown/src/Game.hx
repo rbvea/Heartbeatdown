@@ -22,9 +22,6 @@ class Game extends Component
 
 	public var artery:Entity;
 	public var player:Player;
-
-  public var player:Player;
-
   public var moveSpeed:Float; // rate that layerWalls are spawned
 
   private var controller:AbstractController; // for moving left/right
@@ -33,7 +30,7 @@ class Game extends Component
 
   private var tick:Int;
   private var forking_action:Bool;
-  private var layer_walls_list:List<LayerWall>;
+  private var layer_walls_list:haxe.FastList<LayerWall>;
 
   public function new()
   {
@@ -60,7 +57,7 @@ class Game extends Component
     var layer_i = 0;
 	var baddy_random = Std.random(480);
     var forking_action = false;
-    var layer_walls_list = new haxe.FastList<LayerWall>();
+    layer_walls_list = new haxe.FastList<LayerWall>();
   	layer_walls.add(new Script());
   	layer_walls.get(Script).run(
       new Repeat(
@@ -68,7 +65,7 @@ class Game extends Component
           layer_i++;
 		  
           if(!forking_action && layer_i % 40 == 0){
-            var lwall = new LayerWall();
+            var lwall = new LayerWall(this);
             layer_walls_list.add(lwall);
             layer_walls.addChild(lwall.entity);
           }
@@ -97,12 +94,11 @@ class Game extends Component
 
     tick = 0;
     forking_action = false;
-    layer_walls_list = new List<LayerWall>();
+    layer_walls_list = new haxe.FastList<LayerWall>();
 	
     moveSpeed = INIT_MOVESPEED;
   	player = new Player(this);
   	layer_player.addChild(player.entity);
-
 
 #if flash
     controller = new KeyboardController(this);

@@ -6,8 +6,8 @@ import flambe.swf.Library;
 
 class Player
 {
-	private static inline var RAIL_POSITIONS = [200,300,400,500,600,700];
-	private static inline var PLAYER_Y_POSITION = 450; 
+	private static inline var RAIL_POSITIONS = [150,300,450,600,750,900,1050];
+	private static inline var PLAYER_Y_POSITION = 650; 
 	private static inline var RAIL_SWITCH_SPEED = .25; // seconds
 
   public var entity:Entity;
@@ -21,12 +21,6 @@ class Player
   {
     this.game = game;
     this.pos = 3;
-    
-    entity = new Entity();
-    body = new ImageSprite(HeartBeatDownMain.pack.getTexture("virus"));
-    entity.add(body);
-
-    body.setXY(RAIL_POSITIONS[pos-1],PLAYER_Y_POSITION);
 
     entity = new Entity()
       .add( new MoviePlayer(new Library(HeartBeatDownMain.pack, "ship")).loop("Parent"))
@@ -42,7 +36,7 @@ class Player
   }
   public function moveRight():Void
   {
-    if(pos<5){
+    if(pos<6){
       pos++;
       entity.get(Sprite).x.animateTo(RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
     }

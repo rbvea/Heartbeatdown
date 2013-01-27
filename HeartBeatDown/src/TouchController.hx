@@ -30,10 +30,10 @@ class TouchController extends AbstractController
   private inline function touchUp(point:PointerEvent):Void
   {
     if(point.viewX > downX + swipeMinDistance) {
-      game.player.moveLeft();
+      goRight();
     } else if (point.viewX < downX - swipeMinDistance) {
-      game.player.moveRight();
-	}
+      goLeft();
+    }
     touching = false;
   }
 }
