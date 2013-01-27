@@ -69,14 +69,7 @@ class Game extends Component
   	player = new Player(this);
   	layer_player.addChild(player.entity);
 
-    var b1 = new Baddy1(this);
-    var b2 = new Baddy1(this);
-    var b3 = new Baddy1(this);
-    var b4 = new Baddy1(this);
-    layer_game.addChild(b1.entity);
-    layer_game.addChild(b2.entity);
-    layer_game.addChild(b3.entity);
-    layer_game.addChild(b4.entity);
+    
 
 #if flash
     controller = new KeyboardController(this);
