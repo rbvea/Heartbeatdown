@@ -22,9 +22,11 @@ class LayerFork extends Component {
 	public var entity:Entity;
 	private var fork1:Entity;
 	private var fork2:Entity;
+	private var game:Game;
 	
-	public function new ()
+	public function new (game:Game)
 	{
+		this.game = game;
 
 		entity = new Entity().add(new Script());
 		fork1 = new Entity();
@@ -43,16 +45,23 @@ class LayerFork extends Component {
 			new CallFunction(zoomIn),
 			new Delay(SPEED),
 			//switch animations based on user input
-			new CallFunction(zoomRight),
+			new CallFunction(function() {
+				if(game.player.pos > 2) {
+					zoomRight();
+				} else {
+					zoomLeft();
+				}
+			}),
 		]));
 	}
 
 	public function zoomIn() {
-		image1.scaleX.animateTo(SCALE, SPEED);
-		image1.scaleY.animateTo(SCALE, SPEED);
-		
-		image2.scaleX.animateTo(SCALE, SPEED);
-		image2.scaleY.animateTo(SCALE, SPEED);
+		image1.scaleX.animateTo(0.6, SPEED);
+		image1.scaleY.animateTo(0.6, SPEED);
+
+		image2.scaleX.animateTo(0.6, SPEED);
+		image2.scaleY.animateTo(0.6, SPEED);
+
 	}
 	
 	public function zoomLeft() {

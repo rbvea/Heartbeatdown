@@ -4,12 +4,12 @@ import flambe.display.ImageSprite;
 
 class Player
 {
-  private static inline var RAIL_POSITIONS = [200,350,500,650,800];
-  private static inline var PLAYER_Y_POSITION = 600;
-  private static inline var RAIL_SWITCH_SPEED = .25; // seconds
+	private static inline var RAIL_POSITIONS = [200,300,400,500,600,800];
+	private static inline var PLAYER_Y_POSITION = 450; 
+	private static inline var RAIL_SWITCH_SPEED = .25; // seconds
 
   public var entity:Entity;
-  public var pos:Int; // rail id, 1,2,3,4,5
+  public var pos:Int; // rail id, 1,2,3,4,5,6
 
   private var game:Game;
   private var body:ImageSprite;
