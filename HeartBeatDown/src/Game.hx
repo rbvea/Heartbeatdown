@@ -23,6 +23,7 @@ class Game extends Component
 	public var player:Player;
   public var currentNode:Branch;
   public var map:Map;
+  public var miniMap:Entity;
   public var moveSpeed:Float; // rate that layerWalls are spawned
 
   private var controller:AbstractController; // for moving left/right
@@ -56,6 +57,8 @@ class Game extends Component
     System.root.addChild(layer_ui, true);
 
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
+    miniMap = makeMiniMap();
+    layer_ui.addChild(miniMap);
 
     var layer_i = 0;
 	 var baddy_random = Std.random(480);
@@ -159,6 +162,17 @@ class Game extends Component
       }
     }
     
+  }
+
+  private function makeMiniMap(): Entity
+  {
+    var entity = new Entity()
+      .add(new ImageSprite(HeartBeatDownMain.pack.getTexture("mini_map_level1")));
+    var sprite = entity.get(Sprite);
+    var spriteWidth = sprite.getNaturalWidth();
+    //sprite.centerAnchor();
+    sprite.x._ = System.stage.width - spriteWidth;
+    return entity;
   }
 
 
