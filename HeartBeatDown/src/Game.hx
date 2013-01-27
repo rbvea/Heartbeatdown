@@ -63,7 +63,7 @@ class Game extends Component
           }
 
           if(layer_i == 440){
-            var layer_fork = new LayerFork();
+            var layer_fork = new LayerFork(this);
             layer_walls.addChild(layer_fork.entity);
             forking_action = true;
           }
