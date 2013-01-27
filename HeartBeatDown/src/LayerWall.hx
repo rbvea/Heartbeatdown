@@ -15,39 +15,23 @@ class LayerWall extends Component {
 	//speed in seconds of the zooming nimation
 	private static var SPEED:Int = 2;
 
-	private var image:ImageSprite;
+	private var game:Game;
 	private var script:Script;
-	public var entity:Entity;
 	
-	public function new ()
+	public var entity:Entity;
+	public var image:ImageSprite;
+	public var acceleration:Float;
+	
+	
+	public function new (game:Game)
 	{
+		this.game = game;
+		this.acceleration = 0.01;
 		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft")));
 
-		var image = entity.get(ImageSprite);
-		image.setScale(0.1);
+		image = entity.get(ImageSprite);
+		image.setScale(0);
 		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.2).centerAnchor();
-		entity.add(new Script());
-		entity.get(Script).run(
-			new Repeat(
-				new CallFunction(function() {
-					if(image.scaleX._<5){
-						image.setScale(image.scaleX._+.01);
-					}else{
-						image.dispose();
-					}
-				})
-			)
-		);
-		/*
-		entity.get(Script).run(new Repeat(new Sequence([
-			new CallFunction(function() {
-				image.scaleX.animateTo(2, SPEED);
-				image.scaleY.animateTo(2, SPEED);
-			}),
-			new CallFunction(function() {
-				image.setScale(0.1);
-			}),
-		])));
-*/
+		
 	}
 }
