@@ -13,7 +13,6 @@ import haxe.FastList;
 
 class Game extends Component 
 {
-
   private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [80,55,25]; // 0 = EASY
   private static inline var INIT_MOVESPEED = 3.0; // 5.0 is pretty fast
   private static inline var TICKS_PER_MAP_SEGMENT = 480;
@@ -92,10 +91,8 @@ class Game extends Component
     controller = new TouchController(this);
 #end
     pointer = new PointerController(this);
-
     currentNode = map.startNode;
     baddy_spawn_rate = BADDY_SPAWN_RATE_DIFFICULTY[currentNode.difficulty-1]; // * difficulty
-
     makeMiniMap();
   }
 
@@ -120,45 +117,52 @@ class Game extends Component
 
   override public function onUpdate (dt:Float):Void
   {
-    var forkTicks = TICKS_PER_MAP_SEGMENT * (currentNode.pointArray.length - 1);
-    tick++;
-
-	if(!reachedEnd) {
-    if(!forking_action && (tick * moveSpeed) % 90 == 0){
-      var lwall = new LayerWall(this);
-      layer_walls_list.add(lwall);
-      layer_walls.addChild(lwall.entity);
-    }
-
-    if(tick == forkTicks-40){
-      var layer_fork = new LayerFork(this);
-      layer_walls.add(layer_fork);
-      layer_walls.addChild(layer_fork.entity);
-      forking_action = true;
-    }
-    if(forking_action && tick==forkTicks){
-      forking_action = false;
-      tick = 0;
-    }
+	  tick++;
+	  var forkTicks = TICKS_PER_MAP_SEGMENT * (currentNode.pointArray.length - 1);
+	  if(!reachedEnd) {
+		if(!forking_action && tick % 15 == 0){ // 60 should be an inverse of moveSpeed
+			var lwall = new LayerWall(this);
+			layer_walls_list.add(lwall);
+			layer_walls.addChild(lwall.entity, false);
+		}
+		
+		if(tick == forkTicks-150){
+			var layer_fork = new LayerFork(this);
+			layer_walls.add(layer_fork);
+			layer_walls.addChild(layer_fork.entity, false);
+			forking_action = true;
+		}
+		if(forking_action && tick==forkTicks){
+			forking_action = false;
+			tick = 0;
+		}
 
 		if(tick == baddy_random && !forking_action) {
 			layer_game.addChild(new Baddy1(this).entity);
 			baddy_random = Std.random(480);
 		}
-
-    // increase all layer wall scales
-    for(lw in layer_walls_list){
-      if(lw.image.scaleX._<5){
-        lw.acceleration += (moveSpeed*dt/100);
-        lw.image.setScale(lw.image.scaleX._+lw.acceleration);
-      }else{
-        lw.entity.dispose();
-        //image.dispose();
-        layer_walls_list.remove(lw);
-      }
-    }		
-
-	} else if(tick < 500) { //rapid spawning baddies
+		// increase all layer wall scales
+		for(lw in layer_walls_list){
+			if(lw.image.scaleX._<2){
+				lw.acceleration += (moveSpeed*dt / 100);
+				lw.image.setScale(lw.image.scaleX._+lw.acceleration);
+			}else{
+				lw.entity.dispose();
+				//image.dispose();
+				layer_walls_list.remove(lw);
+			}
+		}
+	} else if(tick < 500) { //rapd spawning baddies
+		for(lw in layer_walls_list){
+			if(lw.image.scaleX._<5){
+				lw.acceleration += (moveSpeed*dt /100);
+				lw.image.setScale(lw.image.scaleX._+lw.acceleration);
+			}else{
+				lw.entity.dispose();
+				//image.dispose();
+				layer_walls_list.remove(lw);
+			}
+		}
 		if(Std.random(5) == 0) {
 			layer_game.addChild(new FinalBaddy(this).entity);
 		}
@@ -193,16 +197,11 @@ class Game extends Component
 
   private function updateMiniMap(): Void
   {
-    trace("tick = " + tick);
     var segment = Std.int(tick / TICKS_PER_MAP_SEGMENT);
-    trace("Node = " + currentNode.id);
-    trace("segment = " + segment);
     var startPoint = currentNode.pointArray[segment];
     var endPoint = currentNode.pointArray[segment + 1];
     var curX = startPoint.x + (endPoint.x - startPoint.x) * tick / TICKS_PER_MAP_SEGMENT;
     var curY = startPoint.y + (endPoint.y - startPoint.y) * tick / TICKS_PER_MAP_SEGMENT;
-    miniMapUser.x._ = curX + miniMapLocation.x;
-    miniMapUser.y._ = curY + miniMapLocation.y;
   }
 
 }
