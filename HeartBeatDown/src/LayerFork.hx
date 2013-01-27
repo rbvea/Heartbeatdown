@@ -12,7 +12,7 @@ import flambe.System;
 
 class LayerFork extends Component {
 
-	//speed in seconds of the zooming nimation
+	//speed in seconds of the zooming animation
 	private static var SPEED:Float = 2;
 	private static var SCALE:Float = 0.6;
 
@@ -23,10 +23,12 @@ class LayerFork extends Component {
 	private var fork1:Entity;
 	private var fork2:Entity;
 	private var game:Game;
+	private var map:Map;
 	
 	public function new (game:Game)
 	{
 		this.game = game;
+		this.map = new Map();
 
 		entity = new Entity().add(new Script());
 		fork1 = new Entity();
