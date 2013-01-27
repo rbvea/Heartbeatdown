@@ -13,7 +13,7 @@ import haxe.FastList;
 
 class Game extends Component 
 {
-  private static inline var INIT_MOVESPEED = .03; // .05 is pretty fast
+  private static inline var INIT_MOVESPEED = .02; // .05 is pretty fast
   private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [80,55,25]; // 0 = EASY
 
 	public var layer_bg:Entity;
@@ -36,7 +36,7 @@ class Game extends Component
   private var tick:Int;
   private var forking_action:Bool;
   private var baddies:FastList<Baddy>;
-  private var layer_walls_list:FastList<LayerWall>;
+  private var layer_walls_list:List<LayerWall>;
   private var baddy_spawn_rate:Int;
 	private var reachedEnd:Bool;
 	private var baddy_random:Int; 
@@ -68,7 +68,7 @@ class Game extends Component
 
 	baddy_random = Std.random(480);
     forking_action = false;
-    layer_walls_list = new haxe.FastList<LayerWall>();
+    layer_walls_list = new List<LayerWall>();
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
@@ -113,16 +113,16 @@ class Game extends Component
   {
 	  tick++;
 	if(!reachedEnd) {
-		if(!forking_action && tick % 30 == 0){ // 60 should be an inverse of moveSpeed
+		if(!forking_action && tick % 15 == 0){ // 60 should be an inverse of moveSpeed
 			var lwall = new LayerWall(this);
 			layer_walls_list.add(lwall);
-			layer_walls.addChild(lwall.entity);
+			layer_walls.addChild(lwall.entity, false);
 		}
 
 		if(tick == 440){
 			var layer_fork = new LayerFork(this);
 			layer_walls.add(layer_fork);
-			layer_walls.addChild(layer_fork.entity);
+			layer_walls.addChild(layer_fork.entity, false);
 			forking_action = true;
 		}
 
@@ -138,6 +138,17 @@ class Game extends Component
 		
 		// increase all layer wall scales
 		for(lw in layer_walls_list){
+			if(lw.image.scaleX._<2){
+				lw.acceleration += (moveSpeed*dt);
+				lw.image.setScale(lw.image.scaleX._+lw.acceleration);
+			}else{
+				lw.entity.dispose();
+				//image.dispose();
+				layer_walls_list.remove(lw);
+			}
+		}
+	} else if(tick < 500) { //rapd spawning baddies
+		for(lw in layer_walls_list){
 			if(lw.image.scaleX._<5){
 				lw.acceleration += (moveSpeed*dt);
 				lw.image.setScale(lw.image.scaleX._+lw.acceleration);
@@ -148,7 +159,6 @@ class Game extends Component
 			}
 		}
 
-	} else if(tick < 500) { //rapid spawning baddies
 		if(Std.random(5) == 0) {
 			layer_game.addChild(new FinalBaddy(this).entity);
 		}

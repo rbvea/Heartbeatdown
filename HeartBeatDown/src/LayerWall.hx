@@ -27,11 +27,11 @@ class LayerWall extends Component {
 	{
 		this.game = game;
 		this.acceleration = 0.01;
-		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft")));
+		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery")));
 
 		image = entity.get(ImageSprite);
 		image.setScale(0);
-		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.2).centerAnchor();
+		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.25).centerAnchor();
 		
 	}
 }
