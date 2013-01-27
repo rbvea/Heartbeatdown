@@ -21,7 +21,7 @@ class LayerWall extends Component {
 	
 	public function new ()
 	{
-		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("Artery")));
+		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery")));
 
 		var image = entity.get(ImageSprite);
 		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.2).centerAnchor();
