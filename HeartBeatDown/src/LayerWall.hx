@@ -21,20 +21,33 @@ class LayerWall extends Component {
 	
 	public function new ()
 	{
-		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("Artery")));
+		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft")));
 
 		var image = entity.get(ImageSprite);
+		image.setScale(0.1);
 		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.2).centerAnchor();
 		entity.add(new Script());
+		entity.get(Script).run(
+			new Repeat(
+				new CallFunction(function() {
+					if(image.scaleX._<5){
+						image.setScale(image.scaleX._+.01);
+					}else{
+						image.dispose();
+					}
+				})
+			)
+		);
+		/*
 		entity.get(Script).run(new Repeat(new Sequence([
 			new CallFunction(function() {
 				image.scaleX.animateTo(2, SPEED);
+				image.scaleY.animateTo(2, SPEED);
 			}),
-			new AnimateTo(image.scaleY, 2, SPEED),
 			new CallFunction(function() {
 				image.setScale(0.1);
 			}),
 		])));
-
+*/
 	}
 }
