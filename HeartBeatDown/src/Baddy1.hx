@@ -19,8 +19,8 @@ class Baddy1 extends Baddy
     var moviePlayer = new MoviePlayer(new Library(HeartBeatDownMain.pack, "Bacteria-Simple")).loop("Bacteria");
     entity = new Entity().add(moviePlayer);
 		
-    var stage_width = System.stage.width;
     var stage_height  = System.stage.height;
+    var stage_width  = System.stage.width;
 
     var randX = Std.random(Std.int(stage_width*.1))-(stage_width*.05);
     var randY = Std.random(Std.int(stage_height*.1))-(stage_height*.05);

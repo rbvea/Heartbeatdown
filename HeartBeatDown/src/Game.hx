@@ -2,6 +2,7 @@ import flambe.Entity;
 import flambe.Component;
 import flambe.display.ImageSprite;
 import flambe.display.Sprite;
+import flambe.display.FillSprite;
 import flambe.System;
 import flambe.script.Sequence;
 import flambe.script.CallFunction;
@@ -35,10 +36,12 @@ class Game extends Component
   // public var layer_wall:LayerWall;
   private var tick:Int;
   private var forking_action:Bool;
-  private var layer_walls_list:List<LayerWall>;
   private var baddies:FastList<Baddy>;
+  private var layer_walls_list:FastList<LayerWall>;
   private var baddy_spawn_rate:Int;
   private var heart_rate:Int; // 0-11
+	private var reachedEnd:Bool;
+	private var baddy_random:Int; 
 
   public function new()
   {
@@ -62,17 +65,18 @@ class Game extends Component
     System.root.addChild(layer_player, true);
     System.root.addChild(layer_ui, true);
 
-  	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
     miniMap = makeMiniMap();
     layer_ui.addChild(miniMap);
 
+	baddy_random = Std.random(480);
+    forking_action = false;
+    layer_walls_list = new haxe.FastList<LayerWall>();
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
     heart_rate = 0;
     forking_action = false;
-    layer_walls_list = new List<LayerWall>();
-    baddies = new FastList<Baddy>();
+    baddies = new haxe.FastList<Baddy>();
 	
     moveSpeed = INIT_MOVESPEED;
   	player = new Player(this);
@@ -86,7 +90,6 @@ class Game extends Component
     pointer = new PointerController(this);
     audioManager = new AudioManager(this);
 
-
     currentNode = map.startNode;
     baddy_spawn_rate = BADDY_SPAWN_RATE_DIFFICULTY[currentNode.difficulty-1]; // * difficulty
   }
@@ -94,9 +97,19 @@ class Game extends Component
   public function chooseNode(direction:Direction):Void{
     switch (direction) {
       case Direction.LEFT:
-        currentNode = currentNode.left;
+		  if(currentNode.left != null) {
+			  currentNode = currentNode.left;
+		  } else {
+			  reachedEnd = true;
+			  tick = 0;
+		  }
       case Direction.RIGHT: 
-        currentNode = currentNode.right;
+		  if(currentNode.right != null) {
+			  currentNode = currentNode.right;
+		  } else {
+			  reachedEnd = true;
+			  tick = 0;
+		  }
     }
     
     // increase heart rate faster and faster as we get closer, and more if more difficult
@@ -106,49 +119,63 @@ class Game extends Component
     else if(heart_rate < 0) heart_rate = 0;
     
     audioManager.playHeartBeat(heart_rate);
+
   }
 
   override public function onUpdate (dt:Float):Void
   {
-    tick++;
-    if(!forking_action && tick % 30 == 0){ // 60 should be an inverse of moveSpeed
-      var lwall = new LayerWall(this);
-      layer_walls_list.add(lwall);
-      layer_walls.addChild(lwall.entity);
-    }
+	  tick++;
+	if(!reachedEnd) {
+		if(!forking_action && tick % 30 == 0){ // 60 should be an inverse of moveSpeed
+			var lwall = new LayerWall(this);
+			layer_walls_list.add(lwall);
+			layer_walls.addChild(lwall.entity);
+		}
 
-    if(tick == 940){
-      var layer_fork = new LayerFork(this);
-      layer_walls.add(layer_fork);
-      layer_walls.addChild(layer_fork.entity);
-      forking_action = true;
-    }
-    if(forking_action && tick==980){
-      forking_action = false;
-      tick = 0;
-    }
+		if(tick == 440){
+			var layer_fork = new LayerFork(this);
+			layer_walls.add(layer_fork);
+			layer_walls.addChild(layer_fork.entity);
+			forking_action = true;
+		}
 
-    if(Std.random(baddy_spawn_rate) == 0) {
-      var baddy = new Baddy1(this);
-      baddies.add(baddy);
-      layer_game.addChild(baddy.entity);
-    }
-  
+		if(forking_action && tick==480){
+			forking_action = false;
+			tick = 0;
+		}
 
-    // increase all layer wall scales
-    for(lw in layer_walls_list){
-      if(lw.image.scaleX._<5){
-        lw.acceleration += (moveSpeed*dt);
-        lw.image.setScale(lw.image.scaleX._+lw.acceleration);
-      }else{
-        lw.entity.dispose();
-        //image.dispose();
-        layer_walls_list.remove(lw);
-      }
-    }
-    
+		if(tick == baddy_random && !forking_action) {
+			layer_game.addChild(new Baddy1(this).entity);
+			baddy_random = Std.random(480);
+		}
+		
+		// increase all layer wall scales
+		for(lw in layer_walls_list){
+			if(lw.image.scaleX._<5){
+				lw.acceleration += (moveSpeed*dt);
+				lw.image.setScale(lw.image.scaleX._+lw.acceleration);
+			}else{
+				lw.entity.dispose();
+				//image.dispose();
+				layer_walls_list.remove(lw);
+			}
+		}
+
+	} else if(tick < 500) { //rapid spawning baddies
+		if(Std.random(5) == 0) {
+			layer_game.addChild(new FinalBaddy(this).entity);
+		}
+	} else { //fadeOut
+			var final = new Entity().add(
+				new FillSprite(0xFFFFFF, System.stage.width, System.stage.height)
+			);
+			var whiteout = final.get(FillSprite);
+			whiteout.alpha._ = 0;
+			System.root.addChild(final);
+			whiteout.alpha.animateTo(1, 7);
+			haxe.Timer.delay(HeartBeatDownMain.cleanup, 7000);
+	}
   }
-
   private function makeMiniMap(): Entity
   {
     var entity = new Entity()
