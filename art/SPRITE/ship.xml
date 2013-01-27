@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://texturepacker.com-->
-<!-- $TexturePacker:SmartUpdate:8409e980f4ead225c17682775d5251a5$ -->
+<!-- $TexturePacker:SmartUpdate:7f699a2c082c1f5296662fdac7b4948f$ -->
 <TextureAtlas imagePath="ship.png">
     <SubTexture name="Cell-Shield0001" x="2" y="1010" width="322" height="202" frameX="-12" frameY="-3" frameWidth="350" frameHeight="210"/>
     <SubTexture name="Cell-Shield0002" x="326" y="810" width="322" height="202" frameX="-12" frameY="-2" frameWidth="350" frameHeight="210"/>
