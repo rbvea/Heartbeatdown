@@ -44,18 +44,36 @@ class LayerFork extends Component {
 		image1 = fork1.get(ImageSprite);
 		image2 = fork2.get(ImageSprite);
 		
-		entity.get(Script).run(new Sequence([
-			new CallFunction(zoomIn),
-			new Delay(SPEED),
-			//switch animations based on user input
-			new CallFunction(function() {
-				if(game.player.pos > 2) {
-					zoomRight();
-				} else {
-					zoomLeft();
+		var currentNode = map.startNode;
+
+		while(true) {
+			trace("in while loop");
+			switch(currentNode) {
+				case Branch(difficulty, right, left, pointArray) : {
+					entity.get(Script).run(new Sequence([
+						new CallFunction(zoomIn),
+						new Delay(SPEED*pointArray.length),
+						//switch animations based on user input
+						new CallFunction(function() {
+							if(game.player.pos > 3) {
+								currentNode = right;
+								trace("going right");
+								zoomRight();
+							} else {
+								currentNode = left;
+								trace("going left");
+								zoomLeft();
+							}
+						}),
+					]));
 				}
-			}),
-		]));
+				case Leaf: {
+					break;
+					// end of game!
+				}
+			}
+		}
+
 	}
 
 	public function zoomIn() {
