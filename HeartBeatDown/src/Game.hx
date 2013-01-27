@@ -47,7 +47,6 @@ class Game extends Component
   private var hazards:FastList<Hazard>;
   private var baddy_spawn_rate:Int;
   private var reachedEnd:Bool;
-	private var baddy_random:Int; 
 
 
   private var _heart_rate:Int;
@@ -82,13 +81,11 @@ class Game extends Component
     System.root.addChild(layer_player, true);
     System.root.addChild(layer_ui, true);
 
-	baddy_random = Std.random(480);
     forking_action = false;
     layer_walls_list = new haxe.FastList<LayerWall>();
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
     var layer_i = 0;
-    var baddy_random = Std.random(TICKS_PER_MAP_SEGMENT);
 
   	layer_bg.addChild(new BgLayer().entity);
 
@@ -163,18 +160,19 @@ class Game extends Component
 			tick = 0;
 		}
 
-		if(tick == baddy_random && !forking_action) {
-			layer_game.addChild(new Baddy1(this).entity);
-			baddy_random = Std.random(480);
-		}
-		
-		if (Std.random(75-(heart_rate*5)) == 0) {
-		  // pick one of the 6 lanes
-		  // add a hazard to it
-		  var hazard = new Hazard(this);
-		  hazards.add(hazard);
-		  layer_game.addChild(hazard.entity);
-		}
+    if(Std.random(baddy_spawn_rate) == 0) {
+      var baddy = new Baddy1(this);
+      baddies.add(baddy);
+      layer_game.addChild(baddy.entity);
+    }
+
+    if (Std.random(75-(heart_rate*5)) == 0) {
+      // pick one of the 6 lanes
+      // add a hazard to it
+      var hazard = new Hazard(this);
+      hazards.add(hazard);
+      layer_game.addChild(hazard.entity);
+    }
 		
 		
 		// increase all layer wall scales
@@ -213,6 +211,7 @@ class Game extends Component
 			haxe.Timer.delay(HeartBeatDownMain.cleanup, 7000);
 	}
   updateMiniMap();
+
   }
 
   private function makeMiniMap(): Void
