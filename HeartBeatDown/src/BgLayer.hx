@@ -14,6 +14,6 @@ class BgLayer extends Component {
 	
 	public function new () 
 	{
-		entity = new Entity().add(new FillSprite(0x000000, System.stage.width, System.stage.height));
+		entity = new Entity().add(new FillSprite(0x570000, System.stage.width, System.stage.height));
 	}
 }
