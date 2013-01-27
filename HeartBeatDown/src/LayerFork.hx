@@ -46,8 +46,8 @@ class LayerFork extends Component{
 	override function onUpdate(dt:Float):Void
 	{
 		if(image1.scaleX._<SCALE){
-			acceleration += (game.moveSpeed*dt);
-		}else if(image1.scaleX._< 2){
+			acceleration += (game.moveSpeed*dt/100);
+		}else if(image1.scaleX._<3){
 			if(game.player.pos > 3) {
 				zoomRight();
 			} else {
