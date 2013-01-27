@@ -6,7 +6,7 @@ import flambe.swf.Library;
 
 class Player
 {
-	private static inline var RAIL_POSITIONS = [200,300,400,500,600,800];
+	private static inline var RAIL_POSITIONS = [150,300,450,600,750,900,1050];
 	private static inline var PLAYER_Y_POSITION = 650; 
 	private static inline var RAIL_SWITCH_SPEED = .25; // seconds
 
@@ -36,7 +36,7 @@ class Player
   }
   public function moveRight():Void
   {
-    if(pos<5){
+    if(pos<6){
       pos++;
       entity.get(Sprite).x.animateTo(RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
     }
