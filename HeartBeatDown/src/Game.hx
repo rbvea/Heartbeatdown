@@ -126,7 +126,7 @@ class Game extends Component
 			layer_walls.addChild(lwall.entity, false);
 		}
 		
-		if(tick == forkTicks-150){
+		if(tick == forkTicks-60){
 			var layer_fork = new LayerFork(this);
 			layer_walls.add(layer_fork);
 			layer_walls.addChild(layer_fork.entity, false);
@@ -141,6 +141,7 @@ class Game extends Component
 			layer_game.addChild(new Baddy1(this).entity);
 			baddy_random = Std.random(480);
 		}
+
 		// increase all layer wall scales
 		for(lw in layer_walls_list){
 			if(lw.image.scaleX._<2){
@@ -176,7 +177,7 @@ class Game extends Component
 			whiteout.alpha.animateTo(1, 7);
 			haxe.Timer.delay(HeartBeatDownMain.cleanup, 7000);
 	}
-  updateMiniMap();
+	  updateMiniMap();
   }
 
   private function makeMiniMap(): Void
