@@ -203,8 +203,8 @@ class Game extends Component
     trace("segment = " + segment);
     var startPoint = currentNode.pointArray[segment];
     var endPoint = currentNode.pointArray[segment + 1];
-    var curX = startPoint.x + (endPoint.x - startPoint.x) * tick / TICKS_PER_MAP_SEGMENT;
-    var curY = startPoint.y + (endPoint.y - startPoint.y) * tick / TICKS_PER_MAP_SEGMENT;
+    var curX = startPoint.x + (endPoint.x - startPoint.x) * (tick % TICKS_PER_MAP_SEGMENT) / TICKS_PER_MAP_SEGMENT;
+    var curY = startPoint.y + (endPoint.y - startPoint.y) * (tick % TICKS_PER_MAP_SEGMENT) / TICKS_PER_MAP_SEGMENT;
     miniMapUser.x._ = curX + miniMapLocation.x;
     miniMapUser.y._ = curY + miniMapLocation.y;
   }
