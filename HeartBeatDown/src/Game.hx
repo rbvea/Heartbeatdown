@@ -19,12 +19,11 @@ class Game extends Component
 	public var layer_player:Entity;
 	public var layer_ui:Entity;
 
-  public var artery:Entity;
+	public var artery:Entity;
+	public var player:Player;
 
-  public var player:Player;
-
-  private var controller:AbstractController; // for moving left/right
-  private var pointer:PointerController;     // for blasting baddies
+	private var controller:AbstractController; // for moving left/right
+	private var pointer:PointerController;     // for blasting baddies
 
   public function new()
   {
@@ -49,6 +48,7 @@ class Game extends Component
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
     var layer_i = 0;
+	var baddy_random = Std.random(480);
     var forking_action = false;
     var layer_walls_list = new haxe.FastList<LayerWall>();
   	layer_walls.add(new Script());
@@ -56,11 +56,17 @@ class Game extends Component
       new Repeat(
         new CallFunction(function() {
           layer_i++;
+		  
           if(!forking_action && layer_i % 40 == 0){
             var lwall = new LayerWall();
             layer_walls_list.add(lwall);
             layer_walls.addChild(lwall.entity);
           }
+
+		  if(layer_i == baddy_random) {
+			  layer_game.addChild(new Baddy1(this).entity);
+			  baddy_random = Std.random(480);
+		  }
 
           if(layer_i == 440){
             var layer_fork = new LayerFork(this);
@@ -77,22 +83,10 @@ class Game extends Component
 
   	layer_bg.addChild(new BgLayer().entity);
 
-    // temporary code to test Baddie
-    //var virus = new Virus(1000);
-	
-	
 	
   	player = new Player(this);
   	layer_player.addChild(player.entity);
 
-    var b1 = new Baddy1(this);
-    var b2 = new Baddy1(this);
-    var b3 = new Baddy1(this);
-    var b4 = new Baddy1(this);
-    layer_game.addChild(b1.entity);
-    layer_game.addChild(b2.entity);
-    layer_game.addChild(b3.entity);
-    layer_game.addChild(b4.entity);
 
 #if flash
     controller = new KeyboardController(this);

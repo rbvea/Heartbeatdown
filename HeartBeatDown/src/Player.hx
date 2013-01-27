@@ -4,7 +4,7 @@ import flambe.display.ImageSprite;
 
 class Player
 {
-	private static inline var RAIL_POSITIONS = [200,300,400,500,600,800];
+	private static inline var RAIL_POSITIONS = [200,300,400,500,600,700];
 	private static inline var PLAYER_Y_POSITION = 450; 
 	private static inline var RAIL_SWITCH_SPEED = .25; // seconds
 
@@ -21,7 +21,7 @@ class Player
     this.pos = 3;
     
     entity = new Entity();
-    body = new ImageSprite(HeartBeatDownMain.pack.getTexture("bacteria"));
+    body = new ImageSprite(HeartBeatDownMain.pack.getTexture("virus"));
     entity.add(body);
 
     body.setXY(RAIL_POSITIONS[pos-1],PLAYER_Y_POSITION);

@@ -40,10 +40,10 @@ class TouchController extends AbstractController
     tempTrace.text = Std.string(point.viewX) + " " + Std.string(point.viewY);
     if(point.viewX > downX + swipeMinDistance) {
       tempTrace.text = "SWIPED LEFT";
-      game.doMoveLeft();
+      game.player.moveLeft();
     } else if (point.viewX < downX - swipeMinDistance) {
       tempTrace.text = "SWIPED RIGHT";
-      game.doMoveRight();
+      game.player.moveRight();
     } else {
       tempTrace.text = "NO SWIPE";
     }

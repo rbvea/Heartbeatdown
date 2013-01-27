@@ -14,6 +14,7 @@ class LayerFork extends Component {
 
 	//speed in seconds of the zooming nimation
 	private static var SPEED:Float = 2;
+	//scale to zoom to before you choose to zoom in to a fork
 	private static var SCALE:Float = 0.6;
 
 	private var script:Script;
