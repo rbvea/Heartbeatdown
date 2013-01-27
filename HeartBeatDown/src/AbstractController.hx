@@ -9,12 +9,12 @@ class AbstractController
 
   public dynamic function goLeft():Void // swipe or push left key
   {
-    game.doMoveLeft();
+    game.player.moveLeft();
   }
 
-  public dynamic function pressRight():Void // swipe or push right key
+  public dynamic function goRight():Void // swipe or push right key
   {
-    game.doMoveRight();
+    game.player.moveRight();
   }
 
 }

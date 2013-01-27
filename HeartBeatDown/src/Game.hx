@@ -68,15 +68,24 @@ class Game extends Component
 	
 	
 	
-	player = new Player(this);
-	layer_player.addChild(player.entity);
+  	player = new Player(this);
+  	layer_player.addChild(player.entity);
 
-	#if flash
-	    controller = new KeyboardController(this);
-	#elseif html
-	    controller = new TouchController(this);
-	#end
+  	#if flash
+  	    controller = new KeyboardController(this);
+  	#elseif html
+  	    controller = new TouchController(this);
+  	#end
 	
+
+    var b1 = new Baddy1(this);
+    var b2 = new Baddy1(this);
+    var b3 = new Baddy1(this);
+    var b4 = new Baddy1(this);
+    layer_game.addChild(b1.entity);
+    layer_game.addChild(b2.entity);
+    layer_game.addChild(b3.entity);
+    layer_game.addChild(b4.entity);
   }
 
 
@@ -86,15 +95,6 @@ class Game extends Component
     
   }
 
-
-  public function doMoveLeft():Void
-  {
-    player.moveLeft();
-  }
-  public function doMoveRight():Void
-  {
-    player.moveRight();
-  }
 
 }
 

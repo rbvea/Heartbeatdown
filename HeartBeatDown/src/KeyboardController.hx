@@ -13,9 +13,9 @@ class KeyboardController extends AbstractController
   {
     switch (event.key) {
       case Key.Right:
-        game.doMoveRight();
+        goRight();
       case Key.Left:
-        game.doMoveLeft();
+        goLeft();
       default:
         // nothing
     }
