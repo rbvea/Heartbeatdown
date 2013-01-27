@@ -13,7 +13,7 @@ import haxe.FastList;
 class Game extends Component 
 {
   private static inline var INIT_MOVESPEED = .03; // .05 is pretty fast
-  private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [100,75,50]; // 0 = EASY
+  private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [80,55,25]; // 0 = EASY
 
 	public var layer_bg:Entity;
 	public var layer_walls:Entity;
@@ -115,7 +115,6 @@ class Game extends Component
     if(forking_action && tick==980){
       forking_action = false;
       tick = 0;
-      trace(Std.string(layer_walls_list.length));
     }
 
     if(Std.random(baddy_spawn_rate) == 0) {
