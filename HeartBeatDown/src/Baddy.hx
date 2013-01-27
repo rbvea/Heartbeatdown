@@ -11,6 +11,7 @@ class Baddy implements IHittable
 
   }
   public function hit():Void{}
+
   private function pointerDown(event:PointerEvent):Void
   {
     this.hit();

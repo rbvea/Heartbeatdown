@@ -90,8 +90,6 @@ class Game extends Component
 
   	layer_bg.addChild(new BgLayer().entity);
 
-	
-
     tick = 0;
     forking_action = false;
     layer_walls_list = new haxe.FastList<LayerWall>();

@@ -1,6 +1,7 @@
 import flambe.Entity;
 import flambe.Component;
 import flambe.display.Sprite;
+import flambe.display.ImageSprite;
 import flambe.swf.MoviePlayer;
 import flambe.swf.Library;
 
@@ -21,7 +22,6 @@ class Player
   {
     this.game = game;
     this.pos = 3;
-
     entity = new Entity()
       .add( new MoviePlayer(new Library(HeartBeatDownMain.pack, "ship")).loop("Parent"))
       .add( new Sprite().setXY(RAIL_POSITIONS[pos-1],PLAYER_Y_POSITION));
@@ -39,6 +39,6 @@ class Player
     if(pos<6){
       pos++;
       entity.get(Sprite).x.animateTo(RAIL_POSITIONS[pos-1], RAIL_SWITCH_SPEED);
-    }
+	}
   }
 }
