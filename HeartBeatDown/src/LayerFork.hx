@@ -12,7 +12,8 @@ import flambe.System;
 
 class LayerFork extends Component{
 
-	//speed in seconds of the zooming nimation
+
+	//scale to zoom to before you choose to zoom in to a fork
 	private static var SCALE:Float = 0.6;
 
 	private var script:Script;
@@ -22,13 +23,14 @@ class LayerFork extends Component{
 	private var fork1:Entity;
 	private var fork2:Entity;
 	private var game:Game;
-
 	private var acceleration:Float;
+	private var map:Map;
 	
 	public function new (game:Game)
 	{
 		this.game = game;
 		this.acceleration = 0;
+		this.map = new Map();
 
 		entity = new Entity().add(new Script());
 		fork1 = new Entity();
@@ -49,12 +51,44 @@ class LayerFork extends Component{
 		entity.addChild(fork1,true);
 		entity.addChild(fork2,true);
 		
+		image1 = fork1.get(ImageSprite);
+		image2 = fork2.get(ImageSprite);
+		
+		var currentNode = map.startNode;
+
+		while(true) {
+			trace("in while loop");
+			switch(currentNode) {
+				case Branch(difficulty, right, left, pointArray) : {
+					entity.get(Script).run(new Sequence([
+						new CallFunction(zoomIn),
+						new Delay(SPEED*pointArray.length),
+						//switch animations based on user input
+						new CallFunction(function() {
+							if(game.player.pos > 3) {
+								currentNode = right;
+								trace("going right");
+								zoomRight();
+							} else {
+								currentNode = left;
+								trace("going left");
+								zoomLeft();
+							}
+						}),
+					]));
+				}
+				case Leaf: {
+					break;
+					// end of game!
+				}
+			}
+		}
 
 	}
 
 	override function onUpdate(dt:Float):Void
 	{
-		if(image1.scaleX._<.6){
+		if(image1.scaleX._<SCALE){
         acceleration += (game.moveSpeed*dt);
         
     }else if(image1.scaleX._<3){

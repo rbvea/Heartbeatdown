@@ -7,6 +7,5 @@ class Virus extends Baddie
 		super(arteryRadius);
 		height = 50;
 		width = 50;
-		
 	}
 }

@@ -11,7 +11,7 @@ class Bacteria extends Baddie
 		height = 200;
 		width = 200;
 		entity = new Entity()
-			.add(new ImageSprite(HeartBeatDownMain.pack.getTexture("Bacteria")));
+			.add(new ImageSprite(HeartBeatDownMain.pack.getTexture("virus")));
 		super(arteryRadius);
 	}
 }

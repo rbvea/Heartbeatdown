@@ -36,9 +36,4 @@ class TouchController extends AbstractController
     }
     touching = false;
   }
-  // private inline function touchMove(point:PointerEvent):Void
-  // {
-    
-  // }
-
 }
