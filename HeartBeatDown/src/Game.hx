@@ -40,7 +40,6 @@ class Game extends Component
 	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
 	layer_walls.add(new Script());
-	/*
 	layer_walls.get(Script).run(new Sequence([
 		new CallFunction(function() {
 			layer_wall = new LayerWall();
@@ -51,10 +50,23 @@ class Game extends Component
 			layer_wall = new LayerWall();
 			layer_walls.addChild(layer_wall.entity);
 		}),
-		]));*/
+		new Delay(5),
+		new CallFunction(function() {
+			var child = layer_walls.firstChild;
+			while(child != null) {
+				var next = child.next;
+				child.get(Script).stopAll();
+				child = next;
+			}
+		}),
+		new CallFunction(function() {
+			layer_walls.disposeChildren();
+			layer_walls.addChild(new LayerFork().entity);
+		}),
+	]));
+
 
 	layer_bg.addChild(new BgLayer().entity);
-	layer_walls.addChild(new LayerFork().entity);
 
     // temporary code to test Baddie
     //var virus = new Virus(1000);
