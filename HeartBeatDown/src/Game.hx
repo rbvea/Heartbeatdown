@@ -21,6 +21,9 @@ class Game extends Component
 
 	public var artery:Entity;
 	public var player:Player;
+  public var currentNode:Branch;
+  public var map:Map;
+  public var miniMap:Entity;
   public var moveSpeed:Float; // rate that layerWalls are spawned
 
   private var controller:AbstractController; // for moving left/right
@@ -29,10 +32,12 @@ class Game extends Component
   // public var layer_wall:LayerWall;
   private var tick:Int;
   private var forking_action:Bool;
-  private var layer_walls_list:haxe.FastList<LayerWall>;
+  private var layer_walls_list:List<LayerWall>;
 
   public function new()
   {
+    this.map = new Map();
+
     layer_bg = new Entity();     // end of the tunnel
     layer_walls = new Entity();  // tunnel animations
     layer_game = new Entity();   // baddies and powerups
@@ -52,11 +57,13 @@ class Game extends Component
     System.root.addChild(layer_ui, true);
 
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
+    miniMap = makeMiniMap();
+    layer_ui.addChild(miniMap);
 
     var layer_i = 0;
-	var baddy_random = Std.random(480);
+	 var baddy_random = Std.random(480);
     var forking_action = false;
-    layer_walls_list = new haxe.FastList<LayerWall>();
+    layer_walls_list = new List<LayerWall>();
   	layer_walls.add(new Script());
   	layer_walls.get(Script).run(
       new Repeat(
@@ -91,7 +98,7 @@ class Game extends Component
 
     tick = 0;
     forking_action = false;
-    layer_walls_list = new haxe.FastList<LayerWall>();
+    layer_walls_list = new List<LayerWall>();
 	
     moveSpeed = INIT_MOVESPEED;
   	player = new Player(this);
@@ -104,9 +111,22 @@ class Game extends Component
 #end
     pointer = new PointerController(this);
 
+
+
+    currentNode = map.startNode;
+
   }
 
-
+  public function chooseNode(direction:Direction):Void{
+    switch (direction) {
+      case Direction.LEFT:
+        currentNode = currentNode.left;
+      case Direction.RIGHT: 
+        currentNode = currentNode.right;
+    }
+    trace(currentNode);
+    trace(currentNode.difficulty);
+  }
 
   override public function onUpdate (dt:Float):Void
   {
@@ -142,6 +162,17 @@ class Game extends Component
       }
     }
     
+  }
+
+  private function makeMiniMap(): Entity
+  {
+    var entity = new Entity()
+      .add(new ImageSprite(HeartBeatDownMain.pack.getTexture("mini_map_level1")));
+    var sprite = entity.get(Sprite);
+    var spriteWidth = sprite.getNaturalWidth();
+    //sprite.centerAnchor();
+    sprite.x._ = System.stage.width - spriteWidth;
+    return entity;
   }
 
 

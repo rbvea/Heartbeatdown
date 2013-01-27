@@ -1,29 +1,12 @@
-enum Node {
-	Branch(difficulty: Int, right: Node, left: Node, pointArray: Array<Point>);
-	Leaf;
-}
-
-class Point
-{
-	public var x: Int;
-	public var y: Int;
-
-	public function new(x: Int, y: Int)
-	{
-		this.x = x;
-		this.y = y;
-	}
-}
-
 class Map 
 {
-	public var startNode: Node;
+	public var startNode: Branch;
 	public function new()
 	{
 		this.startNode = makeMap1();
 	}
 
-	private function makeMap1(): Node
+	private function makeMap1(): Branch
 	{
 		var p0 = new Point(90,241);
 		var p1 = new Point(89,214);
@@ -60,23 +43,23 @@ class Map
 		var p32 = new Point(128,158);
 		var p33 = new Point(119,126);
 
-		var n17 =  Branch(1, Leaf, Leaf, [p17, p18, p19, p12]);
-		var n16 =  Branch(3, Leaf, Leaf, [p17, p20, p12]);
-		var n15 =  Branch(1, n16, n17, [p28, p13, p14, p15, p16, p17]);
-		var n13 =  Branch(3, Leaf, Leaf, [p20, p12]);
-		var n12 =  Branch(2, Leaf, Leaf, [p23, p9, p10, p11, p12]);
-		var n10 =  Branch(3, n12, n13, [p24, p25, p26, p21, p22, p23]);
-		var n9 =  Branch(2, n16, n17, [p8, p13, p14, p15, p16, p17]);
-		var n8 =  Branch(2, Leaf, Leaf, [p2, p24]);
-		var n14 =  Branch(2, n8, n9, [p28, p7, p8]);
-		var n11 =  Branch(1, n14, n15, [p24, p27]);
-		var n7 =  Branch(3, n12, n13, [p6, p21, p22, p23]);
-		var n6 =  Branch(2, n8, n9, [p6, p7]);
-		var n5 =  Branch(2, n10, n11, [p2, p24]);
-		var n4 =  Branch(2, n6, n7, [p2, p3, p4, p5, p6]);
-		var n3 =  Branch(1, n14, n15, [p1, p29, p30, p31, p32, p33, p27, p28]);
-		var n2 =  Branch(2, n4, n5, [p1, p2]);
-		var n1 =  Branch(1, n2, n3, [p0, p1]);
+		var n17:Branch = { difficulty : 1, right : null, left : null, pointArray : [p17, p18, p19, p12] };
+		var n16:Branch = { difficulty : 3, right : null, left : null, pointArray : [p17, p20, p12]};
+		var n15:Branch = { difficulty : 1, right : n16,  left : n17,  pointArray : [p28, p13, p14, p15, p16, p17]};
+		var n13:Branch = { difficulty : 3, right : null, left : null, pointArray : [p20, p12]};
+		var n12:Branch = { difficulty : 2, right : null, left : null, pointArray : [p23, p9, p10, p11, p12]};
+		var n10:Branch = { difficulty : 3, right : n12,  left : n13,  pointArray : [p24, p25, p26, p21, p22, p23]};
+		var n9:Branch  = { difficulty : 2, right : n16,  left : n17,  pointArray : [p8, p13, p14, p15, p16, p17]};
+		var n8:Branch  = { difficulty : 2, right : null, left : null, pointArray : [p2, p24]};
+		var n14:Branch = { difficulty : 2, right : n8,   left : n9,   pointArray : [p28, p7, p8]};
+		var n11:Branch = { difficulty : 1, right : n14,  left : n15,  pointArray : [p24, p27]};
+		var n7:Branch  = { difficulty : 3, right : n12,  left : n13,  pointArray : [p6, p21, p22, p23]};
+		var n6:Branch  = { difficulty : 2, right : n8,   left : n9,   pointArray : [p6, p7]};
+		var n5:Branch  = { difficulty : 2, right : n10,  left : n11,  pointArray : [p2, p24]};
+		var n4:Branch  = { difficulty : 2, right : n6,   left : n7,   pointArray : [p2, p3, p4, p5, p6]};
+		var n3:Branch  = { difficulty : 1, right : n14,  left : n15,  pointArray : [p1, p29, p30, p31, p32, p33, p27, p28]};
+		var n2:Branch  = { difficulty : 2, right : n4,   left : n5,   pointArray : [p1, p2]};
+		var n1:Branch  = { difficulty : 1, right : n2,   left : n3,   pointArray : [p0, p1]};
 		return n1;
 	}
 }
