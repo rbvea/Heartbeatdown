@@ -93,9 +93,9 @@ class Game extends Component
 #end
     pointer = new PointerController(this);
 
+    currentNode = map.startNode;
     baddy_spawn_rate = BADDY_SPAWN_RATE_DIFFICULTY[currentNode.difficulty-1]; // * difficulty
 
-    currentNode = map.startNode;
     makeMiniMap();
   }
 
