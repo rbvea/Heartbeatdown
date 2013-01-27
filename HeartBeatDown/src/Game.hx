@@ -39,30 +39,42 @@ class Game extends Component
     layer_player.add(new Sprite());
     layer_ui.add(new Sprite());
 
-    System.root.addChild(layer_bg);
-    System.root.addChild(layer_walls);
-    System.root.addChild(layer_game);
-    System.root.addChild(layer_player);
-    System.root.addChild(layer_ui);
+    System.root.addChild(layer_bg, true);
+    System.root.addChild(layer_walls, true);
+    System.root.addChild(layer_game, true);
+    System.root.addChild(layer_player, true);
+    System.root.addChild(layer_ui, true);
+
+	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
+
+	layer_walls.add(new Script());
+	layer_walls.get(Script).run(new Sequence([
+		new CallFunction(function() {
+			layer_wall = new LayerWall();
+			layer_walls.addChild(layer_wall.entity);
+		}),
+		new Delay(1),
+		new CallFunction(function() {
+			layer_wall = new LayerWall();
+			layer_walls.addChild(layer_wall.entity);
+		}),
+		new Delay(5),
+		new CallFunction(function() {
+			var child = layer_walls.firstChild;
+			while(child != null) {
+				var next = child.next;
+				child.get(Script).stopAll();
+				child = next;
+			}
+		}),
+		new CallFunction(function() {
+			layer_walls.disposeChildren();
+			layer_walls.addChild(new LayerFork().entity);
+		}),
+	]));
 
 
-    // ui
-  	layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
-
-    // layer_walls
-  	layer_walls.get(Script).run(new Sequence([
-  		new CallFunction(function() {
-  			layer_wall = new LayerWall();
-  			layer_walls.addChild(layer_wall.entity);
-  		}),
-  		new Delay(1),
-  		new CallFunction(function() {
-  			layer_wall = new LayerWall();
-  			layer_walls.addChild(layer_wall.entity);
-  		}),
-  	]));
-    
-    layer_bg.addChild(new BgLayer().entity);
+	layer_bg.addChild(new BgLayer().entity);
 
     // temporary code to test Baddie
     //var virus = new Virus(1000);

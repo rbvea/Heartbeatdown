@@ -10,31 +10,68 @@ import flambe.script.AnimateTo;
 import flambe.script.Delay;
 import flambe.System;
 
-class LayerWall extends Component {
+class LayerFork extends Component {
 
 	//speed in seconds of the zooming nimation
-	private static var SPEED:Int = 2;
+	private static var SPEED:Float = 2;
+	private static var SCALE:Float = 0.6;
 
-	private var image:ImageSprite;
 	private var script:Script;
+	private var image1:ImageSprite;
+	private var image2:ImageSprite;
 	public var entity:Entity;
+	private var fork1:Entity;
+	private var fork2:Entity;
 	
 	public function new ()
 	{
-		entity = new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft")));
 
-		var image = entity.get(ImageSprite);
-		image.setXY(System.stage.width / 2, System.stage.height / 2).setScale(0.2).centerAnchor();
-		entity.add(new Script());
-		entity.get(Script).run(new Repeat(new Sequence([
-			new CallFunction(function() {
-				image.scaleX.animateTo(2, SPEED);
-			}),
-			new AnimateTo(image.scaleY, 2, SPEED),
-			new CallFunction(function() {
-				image.setScale(0.1);
-			}),
-		])));
+		entity = new Entity().add(new Script());
+		fork1 = new Entity();
+		fork2 = new Entity();
 
+		fork1.add(new ImageSprite(HeartBeatDownMain.pack.getTexture("fork_artery_draft")).setXY(System.stage.width / 4, System.stage.height / 2).setScale(0.2).centerAnchor());
+		fork2.add(new ImageSprite(HeartBeatDownMain.pack.getTexture("fork_artery_draft")).setXY(3* (System.stage.width / 4), System.stage.height / 2).setScale(0.2).centerAnchor());
+		
+		entity.addChild(fork1,true);
+		entity.addChild(fork2,true);
+		
+		image1 = fork1.get(ImageSprite);
+		image2 = fork2.get(ImageSprite);
+		
+		entity.get(Script).run(new Sequence([
+			new CallFunction(zoomIn),
+			new Delay(SPEED),
+			//switch animations based on user input
+			new CallFunction(zoomRight),
+		]));
 	}
-}
+
+	public function zoomIn() {
+		image1.scaleX.animateTo(SCALE, SPEED);
+		image1.scaleY.animateTo(SCALE, SPEED);
+		
+		image2.scaleX.animateTo(SCALE, SPEED);
+		image2.scaleY.animateTo(SCALE, SPEED);
+	}
+	
+	public function zoomLeft() {
+		image1.x.animateTo(System.stage.width / 2, 1);
+		image1.scaleX.animateTo(2, SPEED);
+		image1.scaleY.animateTo(2, SPEED);
+
+		image2.x.animateTo(System.stage.width * 2, 1);
+		image2.scaleX.animateTo(2, SPEED);
+		image2.scaleY.animateTo(2, SPEED);
+	}
+
+	public function zoomRight() {
+		image1.x.animateTo(-(System.stage.width * 2), 1);
+		image1.scaleX.animateTo(2, SPEED);
+		image1.scaleY.animateTo(2, SPEED);
+
+		image2.x.animateTo(System.stage.width / 2, 1);
+		image2.scaleX.animateTo(2, SPEED);
+		image2.scaleY.animateTo(2, SPEED);
+	}
+ } 
