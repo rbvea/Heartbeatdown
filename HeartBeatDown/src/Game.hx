@@ -13,8 +13,6 @@ import haxe.FastList;
 
 class Game extends Component 
 {
-  public static inline var RAIL_POSITIONS = [150,300,450,600,750,900,1050];
-  public static inline var HAZARD_DESTINATIONS = [-50,200,450,640,750,1000,1300];
   private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [80,55,25]; // 0 = EASY
   private static inline var INIT_MOVESPEED = 3.0; // 5.0 is pretty fast
   private static inline var TICKS_PER_MAP_SEGMENT = 480;
@@ -37,27 +35,14 @@ class Game extends Component
 
   private var controller:AbstractController; // for moving left/right
   private var pointer:PointerController;     // for blasting baddies
-  private var audioManager:AudioManager;
-  
+
   // public var layer_wall:LayerWall;
   private var tick:Int;
   private var forking_action:Bool;
   private var baddies:FastList<Baddy>;
   private var layer_walls_list:FastList<LayerWall>;
-  private var hazards:FastList<Hazard>;
   private var baddy_spawn_rate:Int;
-  private var reachedEnd:Bool;
-
-
-  private var _heart_rate:Int;
-  public var heart_rate(get_heart_rate,set_heart_rate):Int; // 0-11
-  private function get_heart_rate():Int{ return _heart_rate; }
-  private function set_heart_rate(val:Int):Int{
-    _heart_rate = val;
-    if(_heart_rate > 11) _heart_rate = 11;
-    else if(_heart_rate < 0) _heart_rate = 0;
-    return _heart_rate;
-  }
+	private var reachedEnd:Bool; 
 
   public function new()
   {
@@ -86,15 +71,12 @@ class Game extends Component
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
     var layer_i = 0;
-
+    
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
-    heart_rate = 0;
     forking_action = false;
-    layer_walls_list = new FastList<LayerWall>();
-    baddies = new FastList<Baddy>();
-    hazards = new FastList<Hazard>();
+    baddies = new haxe.FastList<Baddy>();
 	
     moveSpeed = INIT_MOVESPEED;
   	player = new Player(this);
@@ -106,8 +88,6 @@ class Game extends Component
     controller = new TouchController(this);
 #end
     pointer = new PointerController(this);
-    audioManager = new AudioManager(this);
-
     currentNode = map.startNode;
     baddy_spawn_rate = BADDY_SPAWN_RATE_DIFFICULTY[currentNode.difficulty-1]; // * difficulty
     makeMiniMap();
@@ -130,78 +110,71 @@ class Game extends Component
 			  tick = 0;
 		  }
     }
-    
-    // increase heart rate faster and faster as we get closer, and more if more difficult
-    // temporary math is here.
-    heart_rate += currentNode.difficulty;
-    audioManager.playHeartBeat(heart_rate);
-
   }
 
   override public function onUpdate (dt:Float):Void
   {
-    var forkTicks = TICKS_PER_MAP_SEGMENT * (currentNode.pointArray.length - 1);
-    tick++;
+	  tick++;
+	  var forkTicks = TICKS_PER_MAP_SEGMENT * (currentNode.pointArray.length - 1);
+	  if(!reachedEnd) {
+		if(!forking_action && tick % 15 == 0){ // 60 should be an inverse of moveSpeed
+			var lwall = new LayerWall(this);
+			layer_walls_list.add(lwall);
+			layer_walls.addChild(lwall.entity, false);
+		}
+		
+		if(tick == forkTicks-180){
+			var layer_fork = new LayerFork(this);
+			layer_walls.add(layer_fork);
+			layer_walls.addChild(layer_fork.entity, false);
+			forking_action = true;
+		}
+		if(forking_action && tick==forkTicks){
+			forking_action = false;
+			tick = 0;
+		}
 
-  	if(!reachedEnd) {
-      if(!forking_action && (tick * moveSpeed) % 90 == 0){
-        var lwall = new LayerWall(this);
-        layer_walls_list.add(lwall);
-        layer_walls.addChild(lwall.entity, false);
-      }
-
-      if (Std.random(75-(heart_rate*5)) == 0) {
-        // pick one of the 6 lanes
-        // add a hazard to it
-        var hazard = new Hazard(this);
-        hazards.add(hazard);
-        layer_game.addChild(hazard.entity);
-      }
-      
-      if(tick == forkTicks-40){
-        var layer_fork = new LayerFork(this);
-        layer_walls.add(layer_fork);
-        layer_walls.addChild(layer_fork.entity, false);
-        forking_action = true;
-      }
-      if(forking_action && tick==forkTicks){
-        forking_action = false;
-        tick = 0;
-      }
-
-  		if(Std.random(baddy_spawn_rate) == 0 && !forking_action) {
+		if(Std.random(baddy_spawn_rate) == 0 && !forking_action) {
         var baddy = new Baddy1(this);
         baddies.add(baddy);
         layer_game.addChild(baddy.entity);
       }
-
-      // increase all layer wall scales
-      for(lw in layer_walls_list){
-        if(lw.image.scaleX._<5){
-          lw.acceleration += (moveSpeed*dt/100);
-          lw.image.setScale(lw.image.scaleX._+lw.acceleration);
-        }else{
-          lw.entity.dispose();
-          //image.dispose();
-          layer_walls_list.remove(lw);
-        }
-      }		
-
-  	} else if(tick < 500) { //rapid spawning baddies
-  		if(Std.random(5) == 0) {
-  			layer_game.addChild(new FinalBaddy(this).entity);
-  		}
-  	} else { //fadeOut
-  			var final = new Entity().add(
-  				new FillSprite(0xFFFFFF, System.stage.width, System.stage.height)
-  			);
-  			var whiteout = final.get(FillSprite);
-  			whiteout.alpha._ = 0;
-  			System.root.addChild(final);
-  			whiteout.alpha.animateTo(1, 7);
-  			haxe.Timer.delay(HeartBeatDownMain.cleanup, 7000);
-  	}
-    updateMiniMap();
+		// increase all layer wall scales
+		for(lw in layer_walls_list){
+			if(lw.image.scaleX._<2){
+				lw.acceleration += (moveSpeed*dt / 100);
+				lw.image.setScale(lw.image.scaleX._+lw.acceleration);
+			}else{
+				lw.entity.dispose();
+				//image.dispose();
+				layer_walls_list.remove(lw);
+			}
+		}
+	} else if(tick < 500) { //rapd spawning baddies
+		for(lw in layer_walls_list){
+			if(lw.image.scaleX._<5){
+				lw.acceleration += (moveSpeed*dt /100);
+				lw.image.setScale(lw.image.scaleX._+lw.acceleration);
+			}else{
+				lw.entity.dispose();
+				//image.dispose();
+				layer_walls_list.remove(lw);
+			}
+		}
+		if(Std.random(5) == 0) {
+			layer_game.addChild(new FinalBaddy(this).entity);
+		}
+	} else { //fadeOut
+			var final = new Entity().add(
+				new FillSprite(0xFFFFFF, System.stage.width, System.stage.height)
+			);
+			var whiteout = final.get(FillSprite);
+			whiteout.alpha._ = 0;
+			System.root.addChild(final);
+			whiteout.alpha.animateTo(1, 7);
+			haxe.Timer.delay(HeartBeatDownMain.cleanup, 7000);
+	}
+  updateMiniMap();
   }
 
   private function makeMiniMap(): Void
@@ -212,7 +185,7 @@ class Game extends Component
     var spriteWidth = sprite.getNaturalWidth();
     sprite.x._ = System.stage.width - spriteWidth;
     miniMapLocation = new Point(sprite.x._, sprite.y._);
-    miniMapUser = new ImageSprite(HeartBeatDownMain.pack.getTexture("mini_map_ship"));
+    miniMapUser = new ImageSprite(HeartBeatDownMain.pack.getTexture("blue_arrow"));
     miniMapUser.centerAnchor();
     miniMapUser.setXY(currentNode.pointArray[0].x + miniMapLocation.x, 
                       currentNode.pointArray[0].y + miniMapLocation.y);
@@ -222,14 +195,14 @@ class Game extends Component
 
   private function updateMiniMap(): Void
   {
-    //trace("tick = " + tick);
+    trace("tick = " + tick);
     var segment = Std.int(tick / TICKS_PER_MAP_SEGMENT);
-    //trace("Node = " + currentNode.id);
-    //trace("segment = " + segment);
+    trace("Node = " + currentNode.id);
+    trace("segment = " + segment);
     var startPoint = currentNode.pointArray[segment];
     var endPoint = currentNode.pointArray[segment + 1];
-    var curX = startPoint.x + (endPoint.x - startPoint.x) * tick / TICKS_PER_MAP_SEGMENT;
-    var curY = startPoint.y + (endPoint.y - startPoint.y) * tick / TICKS_PER_MAP_SEGMENT;
+    var curX = startPoint.x + (endPoint.x - startPoint.x) * (tick % TICKS_PER_MAP_SEGMENT) / TICKS_PER_MAP_SEGMENT;
+    var curY = startPoint.y + (endPoint.y - startPoint.y) * (tick % TICKS_PER_MAP_SEGMENT) / TICKS_PER_MAP_SEGMENT;
     miniMapUser.x._ = curX + miniMapLocation.x;
     miniMapUser.y._ = curY + miniMapLocation.y;
   }
