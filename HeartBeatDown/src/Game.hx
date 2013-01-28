@@ -13,6 +13,8 @@ import haxe.FastList;
 
 class Game extends Component 
 {
+  public static inline var RAIL_POSITIONS = [150,300,450,600,750,900,1050];
+  public static inline var HAZARD_DESTINATIONS = [-50,200,450,640,750,1000,1300];
   private static inline var BADDY_SPAWN_RATE_DIFFICULTY = [80,55,25]; // 0 = EASY
   private static inline var INIT_MOVESPEED = 3.0; // 5.0 is pretty fast
   private static inline var TICKS_PER_MAP_SEGMENT = 480;
@@ -41,6 +43,7 @@ class Game extends Component
   private var forking_action:Bool;
   private var baddies:FastList<Baddy>;
   private var layer_walls_list:FastList<LayerWall>;
+  private var hazards:FastList<Hazard>;
   private var baddy_spawn_rate:Int;
 	private var reachedEnd:Bool; 
 
@@ -76,7 +79,9 @@ class Game extends Component
 
     tick = 0;
     forking_action = false;
-    baddies = new haxe.FastList<Baddy>();
+    layer_walls_list = new List<LayerWall>();
+    baddies = new FastList<Baddy>();
+    hazards = new FastList<Hazard>();
 	
     moveSpeed = INIT_MOVESPEED;
   	player = new Player(this);
@@ -114,31 +119,39 @@ class Game extends Component
 
   override public function onUpdate (dt:Float):Void
   {
-	  tick++;
-	  var forkTicks = TICKS_PER_MAP_SEGMENT * (currentNode.pointArray.length - 1);
-	  if(!reachedEnd) {
-		if(!forking_action && tick % 15 == 0){ // 60 should be an inverse of moveSpeed
-			var lwall = new LayerWall(this);
-			layer_walls_list.add(lwall);
-			layer_walls.addChild(lwall.entity, false);
-		}
-		
-		if(tick == forkTicks-180){
-			var layer_fork = new LayerFork(this);
-			layer_walls.add(layer_fork);
-			layer_walls.addChild(layer_fork.entity, false);
-			forking_action = true;
-		}
-		if(forking_action && tick==forkTicks){
-			forking_action = false;
-			tick = 0;
-		}
+    tick++;
+    if(!forking_action && tick % 30 == 0){ // 60 should be an inverse of moveSpeed
+      var lwall = new LayerWall(this);
+      layer_walls_list.add(lwall);
+      layer_walls.addChild(lwall.entity);
+    }
 
-		if(Std.random(baddy_spawn_rate) == 0 && !forking_action) {
+    if(tick == 940){
+      var layer_fork = new LayerFork(this);
+      layer_walls.add(layer_fork);
+      layer_walls.addChild(layer_fork.entity);
+      forking_action = true;
+    }
+    if(forking_action && tick==980){
+      forking_action = false;
+      tick = 0;
+    }
+
+    if(Std.random(baddy_spawn_rate) == 0 && !forking_action) {
         var baddy = new Baddy1(this);
         baddies.add(baddy);
         layer_game.addChild(baddy.entity);
-      }
+    }
+
+    if (Std.random(75-(heart_rate*5)) == 0) {
+      // pick one of the 6 lanes
+      // add a hazard to it
+      var hazard = new Hazard(this);
+      hazards.add(hazard);
+      layer_game.addChild(hazard.entity);
+    }
+  
+
 		// increase all layer wall scales
 		for(lw in layer_walls_list){
 			if(lw.image.scaleX._<2){
