@@ -9,6 +9,8 @@ import flambe.script.CallFunction;
 import flambe.script.Delay;
 import flambe.script.Repeat;
 import flambe.script.Script;
+import flambe.swf.MoviePlayer;
+import flambe.swf.Library;
 import haxe.FastList;
 
 class Game extends Component 
@@ -25,16 +27,16 @@ class Game extends Component
 
 	public var artery:Entity;
 	public var player:Player;
-  public var currentNode:Branch;
-  public var map:Map;
-  public var miniMap:Entity;
-  public var miniMapLocation:Point;
-  public var miniMapUser:ImageSprite;
-  public var moveSpeed:Float; // rate that layerWalls are spawned
-
-  private var controller:AbstractController; // for moving left/right
-  private var pointer:PointerController;     // for blasting baddies
-
+	public var currentNode:Branch;
+	public var map:Map;
+	public var miniMap:Entity;
+	public var miniMapLocation:Point;
+	public var miniMapUser:ImageSprite;
+	public var moveSpeed:Float; // rate that layerWalls are spawned
+	
+	private var controller:AbstractController; // for moving left/right
+	private var pointer:PointerController;     // for blasting baddies
+	
   // public var layer_wall:LayerWall;
 	private var tick:Int;
 	private var forking_action:Bool;
@@ -59,7 +61,11 @@ class Game extends Component
     layer_game.add(new Sprite());
     layer_player.add(new Sprite());
     layer_ui.add(new Sprite());
+    layer_ui.add(new MoviePlayer(new Library(HeartBeatDownMain.pack, "HeartBeat")).loop("Heart"));
+	layer_ui.get(MoviePlayer).movie.setXY(30, 30);
+	layer_bg.add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_gradient")));
 
+    System.root.addChild(layer_bg, true);
     System.root.addChild(layer_bg, true);
     System.root.addChild(layer_walls, true);
     System.root.addChild(layer_game, true);
