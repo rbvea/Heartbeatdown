@@ -17,7 +17,6 @@ class Game extends Component
   private static inline var INIT_MOVESPEED = 3.0; // 5.0 is pretty fast
   private static inline var TICKS_PER_MAP_SEGMENT = 480;
 
-
 	public var layer_bg:Entity;
 	public var layer_walls:Entity;
 	public var layer_game:Entity;
@@ -37,11 +36,11 @@ class Game extends Component
   private var pointer:PointerController;     // for blasting baddies
 
   // public var layer_wall:LayerWall;
-  private var tick:Int;
-  private var forking_action:Bool;
-  private var baddies:FastList<Baddy>;
-  private var layer_walls_list:FastList<LayerWall>;
-  private var baddy_spawn_rate:Int;
+	private var tick:Int;
+	private var forking_action:Bool;
+	private var baddies:FastList<Baddy>;
+	private var layer_walls_list:List<LayerWall>;
+	private var baddy_spawn_rate:Int;
 	private var reachedEnd:Bool;
 	private var baddy_random:Int; 
 
@@ -69,12 +68,12 @@ class Game extends Component
 
 	baddy_random = Std.random(480);
     forking_action = false;
-    layer_walls_list = new haxe.FastList<LayerWall>();
   	//layer_game.addChild(new Entity().add(new ImageSprite(HeartBeatDownMain.pack.getTexture("artery_draft"))));
 
     var layer_i = 0;
-    var baddy_random = Std.random(TICKS_PER_MAP_SEGMENT);
-
+	baddy_random = Std.random(480);
+    var forking_action = false;
+    layer_walls_list = new List<LayerWall>();
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
@@ -136,7 +135,6 @@ class Game extends Component
 			forking_action = false;
 			tick = 0;
 		}
-
 		if(tick == baddy_random && !forking_action) {
 			layer_game.addChild(new Baddy1(this).entity);
 			baddy_random = Std.random(480);
@@ -167,6 +165,11 @@ class Game extends Component
 		if(Std.random(5) == 0) {
 			layer_game.addChild(new FinalBaddy(this).entity);
 		}
+	} else if(tick < 500) { //rapid spawning baddies
+		if(Std.random(5) == 0) {
+			layer_game.addChild(new Baddy1(this).entity);
+			baddy_random = Std.random(480);
+		}
 	} else { //fadeOut
 			var final = new Entity().add(
 				new FillSprite(0xFFFFFF, System.stage.width, System.stage.height)
@@ -180,7 +183,7 @@ class Game extends Component
 	  updateMiniMap();
   }
 
-  private function makeMiniMap(): Void
+  private function makeMiniMap(): Entity
   {
     miniMap = new Entity()
       .add(new ImageSprite(HeartBeatDownMain.pack.getTexture("mini_map_level1")));
@@ -194,6 +197,7 @@ class Game extends Component
                       currentNode.pointArray[0].y + miniMapLocation.y);
     layer_ui.addChild(miniMap);
     layer_ui.addChild(new Entity().add(miniMapUser));
+	return minimap;
   }
 
   private function updateMiniMap(): Void
