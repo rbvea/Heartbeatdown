@@ -212,7 +212,7 @@ class Game extends Component
     var spriteWidth = sprite.getNaturalWidth();
     sprite.x._ = System.stage.width - spriteWidth;
     miniMapLocation = new Point(sprite.x._, sprite.y._);
-    miniMapUser = new ImageSprite(HeartBeatDownMain.pack.getTexture("blue_arrow"));
+    miniMapUser = new ImageSprite(HeartBeatDownMain.pack.getTexture("mini_map_ship"));
     miniMapUser.centerAnchor();
     miniMapUser.setXY(currentNode.pointArray[0].x + miniMapLocation.x, 
                       currentNode.pointArray[0].y + miniMapLocation.y);

@@ -18,7 +18,7 @@ class Hazard
   public function new(game:Game)
   {
     this.game = game;
-    body = new ImageSprite(HeartBeatDownMain.pack.getTexture("virus"));
+    body = new ImageSprite(HeartBeatDownMain.pack.getTexture("cholesterol_clump"));
     entity = new Entity().add(body);
 
     var stage_width = System.stage.width;
@@ -30,8 +30,8 @@ class Hazard
     body.x.animateTo(Game.HAZARD_DESTINATIONS[randX], 4-game.currentNode.difficulty); // 0.6
     body.y.animateTo(stage_height, 4-game.currentNode.difficulty);
 
-    body.scaleX.animateTo(2, 4-game.currentNode.difficulty); // 0.6
-    body.scaleY.animateTo(2, 4-game.currentNode.difficulty);
+    body.scaleX.animateTo(.5, 4-game.currentNode.difficulty); // 0.6
+    body.scaleY.animateTo(.5, 4-game.currentNode.difficulty);
 
     var script = new Script();
     script.run(new Sequence([
@@ -40,7 +40,7 @@ class Hazard
         //trace((randX+1)+" - "+game.player.pos);
         if(randX+1 == game.player.pos){
           trace("got hit");
-          game.heart_rate++;
+          //game.heart_rate++;
         }
       })
     ]));
