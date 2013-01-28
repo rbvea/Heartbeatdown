@@ -50,7 +50,7 @@ class Map
 		var n12:Branch = { id : 12, difficulty : 2, left : null, right : null, pointArray : [p23, p9, p10, p11, p12]};
 		var n10:Branch = { id : 10, difficulty : 3, left : n12,  right : n13,  pointArray : [p24, p25, p26, p21, p22, p23]};
 		var n9:Branch  = { id : 9, difficulty : 2, left : n16,  right : n17,  pointArray : [p8, p13, p14, p15, p16, p17]};
-		var n8:Branch  = { id : 8, difficulty : 2, left : null, right : null, pointArray : [p2, p24]};
+		var n8:Branch  = { id : 8, difficulty : 2, left : null, right : null, pointArray : [p9, p10, p11, p12]};
 		var n14:Branch = { id : 14, difficulty : 2, left : n8,   right : n9,   pointArray : [p28, p7, p8]};
 		var n11:Branch = { id : 11, difficulty : 1, left : n14,  right : n15,  pointArray : [p24, p27]};
 		var n7:Branch  = { id : 7, difficulty : 3, left : n12,  right : n13,  pointArray : [p6, p21, p22, p23]};
