@@ -31,6 +31,7 @@ class AudioManager
     this.game = game;
 
     playback = HeartBeatDownMain.pack.getSound(HEARTBEAT_LOOPS[0]).loop();
+    var bgm = HeartBeatDownMain.pack.getSound("audio/bgm").loop();
   }
   public function playHeartBeat(id:Int):Void // 1 - 12
   {
