@@ -172,7 +172,7 @@ class Game extends Component
 			whiteout.alpha._ = 0;
 			System.root.addChild(final);
 			whiteout.alpha.animateTo(1, 7);
-			haxe.Timer.delay(HeartBeatDownMain.cleanup, 7000);
+			haxe.Timer.delay(HeartBeatDownMain.gameOver, 7000);
 	}
   updateMiniMap();
   }
