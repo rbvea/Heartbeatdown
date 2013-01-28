@@ -22,8 +22,7 @@ class HeartBeatDownMain
     }
     private static inline function start_game(event:PointerEvent):Void{
         System.root.remove(title_screen);
-        //System.root.add(new Game());
-        gameOver();
+        System.root.add(new Game());
     }
 
     private static function main ()
