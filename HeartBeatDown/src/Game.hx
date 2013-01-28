@@ -125,7 +125,7 @@ class Game extends Component
 			layer_walls.addChild(lwall.entity, false);
 		}
 		
-		if(tick == forkTicks-180){
+		if(tick == forkTicks-60){
 			var layer_fork = new LayerFork(this);
 			layer_walls.add(layer_fork);
 			layer_walls.addChild(layer_fork.entity, false);
@@ -197,7 +197,7 @@ class Game extends Component
                       currentNode.pointArray[0].y + miniMapLocation.y);
     layer_ui.addChild(miniMap);
     layer_ui.addChild(new Entity().add(miniMapUser));
-	return minimap;
+	return miniMap;
   }
 
   private function updateMiniMap(): Void
