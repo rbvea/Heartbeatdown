@@ -147,7 +147,7 @@ class Game extends Component
       if(!forking_action && (tick * moveSpeed) % 90 == 0){
         var lwall = new LayerWall(this);
         layer_walls_list.add(lwall);
-        layer_walls.addChild(lwall.entity);
+        layer_walls.addChild(lwall.entity, false);
       }
 
       if (Std.random(75-(heart_rate*5)) == 0) {
@@ -161,7 +161,7 @@ class Game extends Component
       if(tick == forkTicks-40){
         var layer_fork = new LayerFork(this);
         layer_walls.add(layer_fork);
-        layer_walls.addChild(layer_fork.entity);
+        layer_walls.addChild(layer_fork.entity, false);
         forking_action = true;
       }
       if(forking_action && tick==forkTicks){
@@ -169,10 +169,11 @@ class Game extends Component
         tick = 0;
       }
 
-  		if(tick == baddy_random && !forking_action) {
-  			layer_game.addChild(new Baddy1(this).entity);
-  			baddy_random = Std.random(480);
-  		}
+  		if(Std.random(baddy_spawn_rate) == 0 && !forking_action) {
+        var baddy = new Baddy1(this);
+        baddies.add(baddy);
+        layer_game.addChild(baddy.entity);
+      }
 
       // increase all layer wall scales
       for(lw in layer_walls_list){
@@ -221,10 +222,10 @@ class Game extends Component
 
   private function updateMiniMap(): Void
   {
-    trace("tick = " + tick);
+    //trace("tick = " + tick);
     var segment = Std.int(tick / TICKS_PER_MAP_SEGMENT);
-    trace("Node = " + currentNode.id);
-    trace("segment = " + segment);
+    //trace("Node = " + currentNode.id);
+    //trace("segment = " + segment);
     var startPoint = currentNode.pointArray[segment];
     var endPoint = currentNode.pointArray[segment + 1];
     var curX = startPoint.x + (endPoint.x - startPoint.x) * tick / TICKS_PER_MAP_SEGMENT;
