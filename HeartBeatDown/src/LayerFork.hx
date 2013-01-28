@@ -1,5 +1,4 @@
-import flambe.Component;
-import flambe.display.ImageSprite;
+import flambe.Component; import flambe.display.ImageSprite;
 import flambe.display.Sprite;
 import flambe.Entity;
 import flambe.script.Script;
@@ -45,16 +44,15 @@ class LayerFork extends Component{
 
 	override function onUpdate(dt:Float):Void
 	{
-		if(image1.scaleX._<SCALE){
-			acceleration += (game.moveSpeed*dt/100);
-		}else if(image1.scaleX._<3){
-			if(game.player.pos > 3) {
+		acceleration += (game.moveSpeed*dt/100);
+		if(image1.scaleX._< 2.8){
+			if(game.player.pos > 2) {
 				zoomRight();
 			} else {
 				zoomLeft();
 			}
 			//image.dispose();
-		}else if(activeFork){
+		}else if(activeFork) {
 			game.chooseNode( (game.player.pos > 3)? Direction.RIGHT:Direction.LEFT );
 			// finished animation.
 			entity.dispose();
