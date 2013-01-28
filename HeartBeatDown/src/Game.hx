@@ -38,7 +38,7 @@ class Game extends Component
 	
 	private var controller:AbstractController; // for moving left/right
 	private var pointer:PointerController;     // for blasting baddies
-	
+	private var audioManager:AudioManager;
   // public var layer_wall:LayerWall;
 
   private var tick:Int;
@@ -94,6 +94,8 @@ class Game extends Component
   	layer_bg.addChild(new BgLayer().entity);
 
     tick = 0;
+    heart_rate = 0;
+    reachedEnd = false;
     forking_action = false;
     layer_walls_list = new FastList<LayerWall>();
     baddies = new FastList<Baddy>();
@@ -108,7 +110,9 @@ class Game extends Component
 #elseif html
     controller = new TouchController(this);
 #end
-    pointer = new PointerController(this);
+    pointer = new PointerController(this); 
+    audioManager = new AudioManager(this);
+
     currentNode = map.startNode;
     baddy_spawn_rate = BADDY_SPAWN_RATE_DIFFICULTY[currentNode.difficulty-1]; // * difficulty
     makeMiniMap();
@@ -154,7 +158,7 @@ class Game extends Component
   			forking_action = false;
   			tick = 0;
   		}
-      if (Std.random(35-(heart_rate*5)) == 0) {
+      if (Std.random(70-(heart_rate*5)) == 0) {// -(heart_rate*5)
         // pick one of the 6 lanes
         // add a hazard to it
         var hazard = new Hazard(this);
@@ -224,10 +228,10 @@ class Game extends Component
 
   private function updateMiniMap(): Void
   {
-    trace("tick = " + tick);
+    //trace("tick = " + tick);
     var segment = Std.int(tick / TICKS_PER_MAP_SEGMENT);
-    trace("Node = " + currentNode.id);
-    trace("segment = " + segment);
+    //trace("Node = " + currentNode.id);
+    //trace("segment = " + segment);
     var startPoint = currentNode.pointArray[segment];
     var endPoint = currentNode.pointArray[segment + 1];
     var curX = startPoint.x + (endPoint.x - startPoint.x) * (tick % TICKS_PER_MAP_SEGMENT) / TICKS_PER_MAP_SEGMENT;
